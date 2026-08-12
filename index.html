@@ -10,7 +10,7 @@
 :root{--navy:#0d2342;--orange:#f58220;--ink:#172337;--muted:#6b7688;--line:#e5eaf1;--soft:#f6f8fb;--cream:#fff5e9;--blue:#eef5ff;--white:#fff}
 *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Arial,sans-serif;color:var(--ink);background:#fff}button,input,select,textarea{font:inherit}button{cursor:pointer}
 .top{background:var(--navy);color:#fff;text-align:center;padding:8px 14px;font-size:13px}.header{position:sticky;top:0;z-index:40;background:#fff;border-bottom:1px solid var(--line)}
-.nav{max-width:1280px;margin:auto;padding:9px 18px;display:flex;align-items:center;gap:18px}.logo{height:54px;width:auto;object-fit:contain}.search{flex:1;display:flex;background:#f1f4f8;border-radius:28px;overflow:hidden}.search input{flex:1;border:0;outline:0;background:transparent;padding:13px 17px}.search button{width:54px;border:0;background:var(--orange);color:#fff;font-size:20px}.links{display:flex;gap:15px}.links a{color:var(--navy);text-decoration:none;font-size:14px;font-weight:750}.pill{border:0;border-radius:22px;padding:10px 15px;font-weight:750}.pill.dark{background:var(--navy);color:#fff}.pill.light{background:#eef2f7;color:var(--navy)}
+.nav{max-width:1280px;margin:auto;padding:9px 18px;display:flex;align-items:center;gap:18px}.logo{height:65px;width:auto;object-fit:contain}.search{flex:1;display:flex;background:#f1f4f8;border-radius:28px;overflow:hidden}.search input{flex:1;border:0;outline:0;background:transparent;padding:13px 17px}.search button{width:54px;border:0;background:var(--orange);color:#fff;font-size:20px}.links{display:flex;gap:15px}.links a{color:var(--navy);text-decoration:none;font-size:14px;font-weight:750}.pill{border:0;border-radius:22px;padding:10px 15px;font-weight:750}.pill.dark{background:var(--navy);color:#fff}.pill.light{background:#eef2f7;color:var(--navy)}
 .hero{background:linear-gradient(120deg,var(--blue),var(--cream));padding:62px 18px}.hero-in{max-width:1280px;margin:auto;display:grid;grid-template-columns:1.12fr .88fr;align-items:center;gap:34px}.eyebrow{color:var(--orange);font-weight:800;letter-spacing:1.4px;font-size:13px}.hero h1{font-size:58px;line-height:1.01;color:var(--navy);margin:12px 0 18px}.hero h1 span{color:var(--orange)}.hero p{max-width:650px;font-size:18px;line-height:1.65;color:var(--muted);margin-bottom:28px}.hero-card{background:#fff;border-radius:28px;padding:26px;text-align:center;box-shadow:0 18px 55px #0d23421a}.hero-card img{width:100%;max-height:260px;object-fit:contain}.hero-card strong{color:var(--navy);letter-spacing:.7px;display:block;margin-top:12px}
 .wrap{max-width:1280px;margin:auto;padding:60px 18px}.section-head{text-align:center;margin-bottom:30px}.section-head h2{color:var(--navy);font-size:34px;margin:0 0 8px}.section-head p{color:var(--muted);margin:0}
 .cats{display:grid;grid-template-columns:1fr 1fr;gap:22px}.cat{border-radius:24px;padding:32px;min-height:205px;display:flex;flex-direction:column;justify-content:flex-end}.cat.home{background:linear-gradient(135deg,#fff0df,#fff)}.cat.elec{background:linear-gradient(135deg,#e6f0ff,#fff)}.cat h3{font-size:27px;color:var(--navy);margin:0 0 8px}.cat p{color:var(--muted);margin:0 0 18px}.cat button{width:max-content;border:0;background:var(--navy);color:#fff;border-radius:22px;padding:11px 18px;font-weight:750}
@@ -20,20 +20,20 @@
 footer{background:var(--navy);color:#fff;padding:44px 18px}.foot{max-width:1280px;margin:auto;display:grid;grid-template-columns:2fr 1fr 1fr;gap:35px}.foot p{color:#c9d3df;line-height:1.6}.bottom{text-align:center;border-top:1px solid #ffffff22;margin-top:30px;padding-top:18px;color:#aeb9c8;font-size:13px}
 .modal{display:none;position:fixed;inset:0;background:#0008;z-index:100;align-items:center;justify-content:center;padding:14px}.modal.show{display:flex}.box{background:#fff;border-radius:20px;max-width:760px;width:100%;max-height:92vh;overflow:auto;padding:25px}.close{float:right;border:0;background:#eef2f7;border-radius:50%;width:34px;height:34px}.box h2{margin-top:0;color:var(--navy)}.cartrow{display:grid;grid-template-columns:1fr auto auto;gap:12px;align-items:center;border-bottom:1px solid var(--line);padding:13px 0}.qty button{border:1px solid var(--line);background:#fff;border-radius:6px;width:28px;height:28px}.summary{background:var(--soft);padding:16px;border-radius:14px;margin-top:17px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.field{margin:9px 0}.field.full{grid-column:1/-1}.field label{display:block;font-size:13px;font-weight:750;margin-bottom:5px}.field input,.field textarea,.field select{width:100%;border:1px solid var(--line);border-radius:9px;padding:11px;outline:0}.notice{padding:12px;background:#eef8ef;color:#286734;border-radius:10px;margin:10px 0}.adminitem{display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--line);padding:12px 0}.danger{border:0;background:#b42318;color:#fff;border-radius:8px;padding:8px}.muted{color:var(--muted)}
 @media(max-width:980px){.nav{flex-wrap:wrap}.search{order:3;flex-basis:100%}.links{display:none}.hero-in{grid-template-columns:1fr}.products{grid-template-columns:repeat(2,1fr)}.benefits{grid-template-columns:1fr 1fr}}
-@media(max-width:560px){.logo{height:42px}.hero{padding:42px 15px}.hero h1{font-size:42px}.cats,.products,.benefits,.foot{grid-template-columns:1fr}.toolbar{flex-direction:column;align-items:flex-start}.grid{grid-template-columns:1fr}.field.full{grid-column:auto}}
+@media(max-width:560px){.logo{height:48px}.hero{padding:42px 15px}.hero h1{font-size:42px}.cats,.products,.benefits,.foot{grid-template-columns:1fr}.toolbar{flex-direction:column;align-items:flex-start}.grid{grid-template-columns:1fr}.field.full{grid-column:auto}}
 </style>
 </head>
 <body>
 <div class="top">🚚 Free delivery on selected orders • Secure shopping • Devarapus</div>
 <header class="header"><nav class="nav">
-<img class="logo" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 320'><path d='M 320,10 C 410,10 470,60 470,135 C 470,210 410,250 320,250 H 260 V 10 Z M 305,40 V 220 H 320 C 380,220 425,190 425,135 C 425,80 380,40 320,40 Z' fill='%230d2342'/><path d='M 235,100 L 315,160 H 155 Z' fill='%230d2342'/><rect x='222' y='165' width='12' height='12' fill='%23ffffff'/><rect x='238' y='165' width='12' height='12' fill='%23ffffff'/><rect x='222' y='180' width='12' height='12' fill='%23ffffff'/><rect x='238' y='180' width='12' height='12' fill='%23ffffff'/><path d='M 105,150 H 145 Q 170,220 285,210 L 295,190 H 165 C 145,190 135,160 120,150 Z' fill='%23f58220'/><circle cx='180' cy='235' r='14' fill='%230d2342'/><circle cx='180' cy='235' r='6' fill='%23ffffff'/><circle cx='240' cy='235' r='14' fill='%230d2342'/><circle cx='240' cy='235' r='6' fill='%23ffffff'/><text x='300' y='290' font-family='Georgia, serif' font-size='42' font-weight='bold' fill='%230d2342' text-anchor='middle'>- Devarapus -</text></svg>" alt="Devarapus">
+<img class="logo" id="headerLogo" alt="Devarapus Logo">
 <div class="search"><input id="q" placeholder="Search Home, Kitchen, Electronics..." oninput="render()"><button onclick="render()">⌕</button></div>
 <div class="links"><a href="#home">Home</a><a href="#categories">Categories</a><a href="#shop">Shop</a></div>
 <button class="pill light" onclick="openAdmin()">Admin</button>
 <button class="pill dark" onclick="openCart()">🛒 Cart <span id="count">0</span></button>
 </nav></header>
 
-<section class="hero" id="home"><div class="hero-in"><div><div class="eyebrow">WELCOME TO DEVARAPUS</div><h1>Shop smarter.<br><span>Live better.</span></h1><p>Useful products for your home, kitchen and everyday technology — thoughtfully selected and easy to shop.</p><button class="pill" style="background:var(--orange);color:#fff;padding:14px 24px" onclick="document.getElementById('shop').scrollIntoView()">Shop Now →</button></div><div class="hero-card"><img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 380'><path d='M 320,10 C 410,10 470,60 470,135 C 470,210 410,250 320,250 H 260 V 10 Z M 305,40 V 220 H 320 C 380,220 425,190 425,135 C 425,80 380,40 320,40 Z' fill='%230d2342'/><path d='M 235,100 L 315,160 H 155 Z' fill='%230d2342'/><rect x='222' y='165' width='12' height='12' fill='%23ffffff'/><rect x='238' y='165' width='12' height='12' fill='%23ffffff'/><rect x='222' y='180' width='12' height='12' fill='%23ffffff'/><rect x='238' y='180' width='12' height='12' fill='%23ffffff'/><path d='M 105,150 H 145 Q 170,220 285,210 L 295,190 H 165 C 145,190 135,160 120,150 Z' fill='%23f58220'/><circle cx='180' cy='235' r='14' fill='%230d2342'/><circle cx='180' cy='235' r='6' fill='%23ffffff'/><circle cx='240' cy='235' r='14' fill='%230d2342'/><circle cx='240' cy='235' r='6' fill='%23ffffff'/><text x='300' y='295' font-family='Georgia, serif' font-size='42' font-weight='bold' fill='%230d2342' text-anchor='middle'>- Devarapus -</text><text x='300' y='330' font-family='Inter, sans-serif' font-size='14' font-weight='800' fill='%230d2342' text-anchor='middle' letter-spacing='2'>— SHOP MORE. LIVE BETTER. —</text><text x='300' y='360' font-family='Inter, sans-serif' font-size='12' font-weight='700' fill='%236b7688' text-anchor='middle' letter-spacing='1.5'>HOME &amp; KITCHEN | ELECTRONICS | MORE FOR YOU</text></svg>" alt="Devarapus Logo"><strong>HOME & KITCHEN • ELECTRONICS</strong></div></div></section>
+<section class="hero" id="home"><div class="hero-in"><div><div class="eyebrow">WELCOME TO DEVARAPUS</div><h1>Shop smarter.<br><span>Live better.</span></h1><p>Useful products for your home, kitchen and everyday technology — thoughtfully selected and easy to shop.</p><button class="pill" style="background:var(--orange);color:#fff;padding:14px 24px" onclick="document.getElementById('shop').scrollIntoView()">Shop Now →</button></div><div class="hero-card"><img id="heroLogo" alt="Devarapus Logo"><strong>HOME & KITCHEN • ELECTRONICS</strong></div></div></section>
 
 <section class="wrap" id="categories"><div class="section-head"><h2>Shop by Category</h2><p>Everything you need, simply organised.</p></div><div class="cats">
 <div class="cat home"><h3>🏠 Home & Kitchen</h3><p>Practical products designed for everyday living.</p><button onclick="category='home';render();document.getElementById('shop').scrollIntoView()">Explore Products</button></div>
@@ -55,6 +55,35 @@ footer{background:var(--navy);color:#fff;padding:44px 18px}.foot{max-width:1280p
 <div class="modal" id="adminModal"><div class="box"><button class="close" onclick="closeM('adminModal')">×</button><h2>Devarapus Admin</h2><div id="adminBox"></div></div></div>
 
 <script>
+// Canvas render for crisp logo presentation
+function createLogoUri() {
+ const c = document.createElement('canvas');
+ c.width = 600; c.height = 360;
+ const ctx = c.getContext('2d');
+ ctx.fillStyle = '#ffffff'; ctx.fillRect(0,0,600,360);
+ ctx.fillStyle = '#0d2342'; ctx.font = 'bold 150px Georgia, serif'; ctx.textAlign = 'center';
+ ctx.fillText('D', 300, 180);
+ ctx.beginPath(); ctx.moveTo(220, 120); ctx.lineTo(300, 60); ctx.lineTo(380, 120); ctx.closePath();
+ ctx.fillStyle = '#0d2342'; ctx.fill();
+ ctx.fillStyle = '#ffffff'; ctx.fillRect(280, 85, 12, 12); ctx.fillRect(298, 85, 12, 12);
+ ctx.fillRect(280, 102, 12, 12); ctx.fillRect(298, 102, 12, 12);
+ ctx.beginPath(); ctx.moveTo(170, 100); ctx.lineTo(210, 100); ctx.lineTo(240, 155); ctx.lineTo(340, 155); ctx.lineTo(355, 110); ctx.lineTo(220, 110);
+ ctx.fillStyle = '#f58220'; ctx.fill();
+ ctx.beginPath(); ctx.arc(250, 175, 12, 0, Math.PI*2); ctx.arc(320, 175, 12, 0, Math.PI*2);
+ ctx.fillStyle = '#0d2342'; ctx.fill();
+ ctx.fillStyle = '#0d2342'; ctx.font = 'bold 52px Georgia, serif';
+ ctx.fillText('- Devarapus -', 300, 260);
+ ctx.font = '800 16px Inter, sans-serif'; ctx.letterSpacing = '3px';
+ ctx.fillText('SHOP MORE. LIVE BETTER.', 300, 295);
+ ctx.fillStyle = '#6b7688'; ctx.font = '700 13px Inter, sans-serif';
+ ctx.fillText('HOME & KITCHEN   |   ELECTRONICS   |   MORE FOR YOU', 300, 325);
+ return c.toDataURL();
+}
+
+const logoUri = createLogoUri();
+document.getElementById('headerLogo').src = logoUri;
+document.getElementById('heroLogo').src = logoUri;
+
 const defaultImg = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23f1f4f8'/><text x='50' y='55' font-size='12' fill='%236b7688' text-anchor='middle' font-family='sans-serif'>Product</text></svg>";
 
 const starter=[
