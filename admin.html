@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Devarapus | Admin Portal</title>
+<link rel="icon" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%230d2342'/><text x='50' y='70' font-size='60' font-weight='bold' text-anchor='middle' fill='%23f58220' font-family='Georgia, serif'>D</text></svg>">
+<style>
+:root{--navy:#0d2342;--orange:#f58220;--ink:#172337;--muted:#6b7688;--line:#e2e8f0;--soft:#f8fafc;--white:#ffffff}
+*{box-sizing:border-box}body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;color:var(--ink);background:#f1f5f9}
+header{background:var(--navy);color:#fff;padding:16px 24px;display:flex;justify-content:space-between;align-items:center}
+header h1{margin:0;font-size:20px;display:flex;align-items:center;gap:10px}
+.wrap{max-width:1200px;margin:30px auto;padding:0 20px}
+.card{background:#fff;border-radius:20px;padding:24px;border:1px solid var(--line);box-shadow:0 10px 25px -5px rgba(0,0,0,0.05);margin-bottom:24px}
+.card h2{margin-top:0;color:var(--navy);font-size:20px;border-bottom:1px solid var(--line);padding-bottom:12px;display:flex;justify-content:space-between;align-items:center}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.field{margin:8px 0}.field.full{grid-column:1/-1}
+.field label{display:block;font-size:13px;font-weight:700;margin-bottom:6px;color:var(--navy)}
+.field input,.field select,.field textarea{width:100%;border:1px solid var(--line);border-radius:10px;padding:12px;outline:0;background:#fff}
+.field input:focus{border-color:var(--orange)}
+.btn-primary{background:var(--orange);color:#fff;border:0;padding:12px 24px;border-radius:12px;cursor:pointer;font-weight:700;font-size:14px;transition:.2s}
+.btn-primary:hover{background:#d96f14}
+.btn-danger{background:#ef4444;color:#fff;border:0;padding:8px 14px;border-radius:10px;cursor:pointer;font-weight:600}
+.btn-danger:hover{background:#dc2626}
+.btn-refresh{background:var(--navy);color:#fff;border:0;padding:8px 16px;border-radius:10px;cursor:pointer;font-weight:700}
+.order-box{border:1px solid var(--line);border-radius:16px;padding:20px;margin-bottom:16px;background:var(--soft)}
+.order-header{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--line);padding-bottom:12px;margin-bottom:12px}
+.tag{background:#e0f2fe;color:#0369a1;padding:4px 10px;border-radius:20px;font-size:12px;font-weight:700}
+.customer-info{display:grid;grid-template-columns:1fr 1fr;gap:16px;background:#fff;padding:16px;border-radius:12px;border:1px solid var(--line);margin-bottom:12px}
+.items-list{background:#fff;padding:16px;border-radius:12px;border:1px solid var(--line)}
+.item-row{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px stroke var(--line)}
+.product-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:16px}
+.prod-card{border:1px solid var(--line);border-radius:14px;padding:12px;background:#fff;text-align:center}
+.prod-card img{width:100%;height:120px;object-fit:contain;border-radius:8px;background:#f8fafc;margin-bottom:8px}
+.preview-box{width:100px;height:100px;border:2px dashed var(--line);border-radius:12px;display:flex;align-items:center;justify-content:center;overflow:hidden;background:var(--soft)}
+.preview-box img{width:100%;height:100%;object-fit:contain}
+@media(max-width:900px){.product-grid{grid-template-columns:repeat(2,1fr)}.grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>📦 Devarapus Admin & Store Manager</h1>
+  <a href="index.html" target="_blank" style="color:#fff;text-decoration:none;font-weight:600">🌐 View Live Storefront</a>
+</header>
+
+<div class="wrap">
+  <!-- Add New Product Section -->
+  <div class="card">
+    <h2>➕ Upload New Product Details & Photo</h2>
+    <form onsubmit="saveProduct(event)">
+      <div class="grid">
+        <div class="field"><label>Product Title *</label><input id="pName" placeholder="e.g. Smart Digital Air Fryer" required></div>
+        <div class="field">
+          <label>Category *</label>
+          <select id="pCat" required>
+            <option value="home">Home & Kitchen</option>
+            <option value="electronics">Electronics</option>
+          </select>
+        </div>
+        <div class="field"><label>Selling Price (₹) *</label><input id="pPrice" type="number" placeholder="2499" required></div>
+        <div class="field"><label>Original Price / MRP (₹)</label><input id="pOld" type="number" placeholder="3999"></div>
+        <div class="field"><label>Stock Quantity *</label><input id="pStock" type="number" value="15" required></div>
+        <div class="field"><label>Badge Tag</label><input id="pBadge" placeholder="e.g. NEW, 30% OFF, BESTSELLER"></div>
+        
+        <div class="field full">
+          <label>Upload Product Photo *</label>
+          <input type="file" id="pImgFile" accept="image/*" onchange="previewImage(event)">
+          <div style="display:flex;align-items:center;gap:16px;margin-top:10px">
+            <div class="preview-box" id="pPreview"><span>No Image</span></div>
+            <span style="font-size:12px;color:var(--muted)">Supported formats: JPG, PNG, WEBP, SVG.<br>Images will be optimized directly into storefront database.</span>
+          </div>
+        </div>
+      </div>
+      <button type="submit" class="btn-primary" style="margin-top:16px">Publish Product to Store →</button>
+    </form>
+  </div>
+
+  <!-- Manage Store Products Section -->
+  <div class="card">
+    <h2>
+      <span>🛒 Store Products Catalogue</span>
+      <button class="btn-refresh" onclick="loadProducts()">Refresh Products</button>
+    </h2>
+    <div id="productsContainer" class="product-grid"></div>
+  </div>
+
+  <!-- Customer Orders Breakdown Section -->
+  <div class="card">
+    <h2>
+      <span>📋 Customer Orders</span>
+      <button class="btn-refresh" onclick="loadOrders()">Refresh Orders</button>
+    </h2>
+    <div id="ordersContainer"></div>
+  </div>
+</div>
+
+<script>
+let uploadedImageBase64 = "";
+
+function previewImage(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    uploadedImageBase64 = e.target.result;
+    document.getElementById("pPreview").innerHTML = `<img src="${uploadedImageBase64}" alt="Preview">`;
+  };
+  reader.readAsDataURL(file);
+}
+
+function saveProduct(e) {
+  e.preventDefault();
+  const name = document.getElementById("pName").value.trim();
+  const cat = document.getElementById("pCat").value;
+  const price = Number(document.getElementById("pPrice").value);
+  const old = Number(document.getElementById("pOld").value) || 0;
+  const stock = Number(document.getElementById("pStock").value) || 10;
+  const badge = document.getElementById("pBadge").value.trim() || "NEW";
+
+  const defaultImg = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23f1f4f8'/><text x='50' y='55' font-size='12' fill='%236b7688' text-anchor='middle' font-family='sans-serif'>Product</text></svg>";
+
+  const newProduct = {
+    id: Date.now(),
+    name,
+    cat,
+    price,
+    old,
+    stock,
+    badge,
+    rating: 5,
+    img: uploadedImageBase64 || defaultImg
+  };
+
+  let products = JSON.parse(localStorage.getItem("dv_products") || "[]");
+  products.unshift(newProduct);
+  localStorage.setItem("dv_products", JSON.stringify(products));
+
+  alert("Product published successfully!");
+  e.target.reset();
+  uploadedImageBase64 = "";
+  document.getElementById("pPreview").innerHTML = "<span>No Image</span>";
+  
+  loadProducts();
+}
+
+function loadProducts() {
+  const container = document.getElementById("productsContainer");
+  const products = JSON.parse(localStorage.getItem("dv_products") || "[]");
+
+  if (!products.length) {
+    container.innerHTML = "<p style='grid-column:1/-1;color:var(--muted)'>No products available in database.</p>";
+    return;
+  }
+
+  container.innerHTML = products.map((p) => `
+    <div class="prod-card">
+      <img src="${p.img}" alt="${p.name}">
+      <b style="display:block;font-size:14px;color:var(--navy);margin-bottom:4px">${p.name}</b>
+      <div style="font-size:13px;color:var(--muted)">₹${p.price.toLocaleString("en-IN")} • Stock: ${p.stock}</div>
+      <button class="btn-danger" style="margin-top:8px;width:100%;font-size:12px" onclick="deleteProduct(${p.id})">Remove</button>
+    </div>
+  `).join("");
+}
+
+function deleteProduct(id) {
+  if (confirm("Delete this product from storefront?")) {
+    let products = JSON.parse(localStorage.getItem("dv_products") || "[]");
+    products = products.filter(p => p.id !== id);
+    localStorage.setItem("dv_products", JSON.stringify(products));
+    loadProducts();
+  }
+}
+
+function loadOrders() {
+  const container = document.getElementById("ordersContainer");
+  const orders = JSON.parse(localStorage.getItem("dv_orders") || "[]");
+
+  if (!orders.length) {
+    container.innerHTML = "<p style='color:var(--muted)'>No customer orders received yet.</p>";
+    return;
+  }
+
+  container.innerHTML = orders.map((o, index) => `
+    <div class="order-box">
+      <div class="order-header">
+        <div>
+          <b style="font-size:18px;color:var(--navy)">Order #${o.number}</b>
+          <span style="color:var(--muted);font-size:13px;margin-left:10px">${new Date(o.date).toLocaleString()}</span>
+        </div>
+        <div>
+          <span class="tag">${o.payment}</span>
+          <b style="font-size:18px;color:var(--navy);margin-left:12px">₹${o.total.toLocaleString("en-IN")}</b>
+        </div>
+      </div>
+
+      <div class="customer-info">
+        <div>
+          <b style="color:var(--navy)">👤 Customer Details:</b><br>
+          <b>Name:</b> ${o.name}<br>
+          <b>Mobile:</b> ${o.phone}
+        </div>
+        <div>
+          <b style="color:var(--navy)">📍 Delivery Address:</b><br>
+          ${o.address}, ${o.city} - ${o.pin}
+        </div>
+      </div>
+
+      <div class="items-list">
+        <b style="color:var(--navy);display:block;margin-bottom:8px">🛍️ Ordered Items:</b>
+        ${o.items.map(i => `
+          <div class="item-row">
+            <span><b>${i.name}</b> (x${i.qty})</span>
+            <span>₹${(i.price * i.qty).toLocaleString("en-IN")}</span>
+          </div>
+        `).join("")}
+      </div>
+
+      <div style="text-align:right;margin-top:12px">
+        <button class="btn-danger" onclick="deleteOrder(${index})">Delete Order Record</button>
+      </div>
+    </div>
+  `).join("");
+}
+
+function deleteOrder(index) {
+  if (confirm("Are you sure you want to remove this order record?")) {
+    let orders = JSON.parse(localStorage.getItem("dv_orders") || "[]");
+    orders.splice(index, 1);
+    localStorage.setItem("dv_orders", JSON.stringify(orders));
+    loadOrders();
+  }
+}
+
+loadProducts();
+loadOrders();
+</script>
+
+</body>
+</html>
