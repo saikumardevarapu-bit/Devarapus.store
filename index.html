@@ -3,17 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="Devarapus Auto Care — Premium Car & Motorbike Detailing Kits, Ceramic Shampoos, Chain Lubes & Maintenance Essentials.">
-<title>Devarapus Auto Care | Premium Car & Motorbike Care</title>
+<meta name="description" content="Devarapus Auto Care — Premium Car & Motorbike Detailing Kits, Shampoos & Chain Care.">
+<title>Devarapus Auto Care | Premium Vehicle Essentials</title>
 <link rel="icon" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%230a192f'/><path d='M20 60 L35 35 L65 35 L80 60 Z' fill='%23f58220'/><circle cx='35' cy='65' r='10' fill='%23ffffff'/><circle cx='65' cy='65' r='10' fill='%23ffffff'/></svg>">
 
-<!-- Open Graph / WhatsApp Preview Meta Tags -->
-<meta property="og:type" content="website">
-<meta property="og:title" content="Devarapus Auto Care | Premium Car & Motorbike Care">
-<meta property="og:description" content="Shop professional snow foam washes, chain lube combos, ceramic coatings & maintenance kits. Easy 1-tap UPI & Cash on Delivery.">
-<meta property="og:url" content="https://saikumardevarapu-bit.github.io/Devarapus.store/">
-
-<!-- Supabase JS Client -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 :root{--navy:#0a192f;--navy-light:#172a45;--orange:#f58220;--orange-hover:#d96f14;--ink:#1e293b;--muted:#64748b;--line:#e2e8f0;--soft:#f8fafc;--cream:#fff8f0;--blue:#edf4ff;--white:#ffffff;--shadow:0 20px 40px -15px rgba(10,25,47,0.08)}
@@ -27,34 +20,33 @@
 .products{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}.product{border:1px solid var(--line);border-radius:24px;overflow:hidden;background:#fff;position:relative;transition:all .3s ease;display:flex;flex-direction:column}.product:hover{transform:translateY(-6px);box-shadow:0 25px 50px -12px rgba(10,25,47,0.12);border-color:rgba(245,130,32,0.3)}.pimg{height:250px;background:#f8fafc;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:15px;position:relative;overflow:hidden}.pimg img{width:100%;height:190px;object-fit:contain;transition:transform .3s ease}.thumbs{display:flex;gap:6px;margin-top:8px;z-index:2}.thumb{width:36px;height:36px;border-radius:6px;border:1px solid var(--line);object-fit:cover;cursor:pointer;background:#fff}.thumb.active{border-color:var(--orange)}.info{padding:20px;display:flex;flex-direction:column;flex:1}.badge{position:absolute;top:14px;left:14px;background:var(--orange);color:#fff;border-radius:14px;padding:6px 12px;font-size:11px;font-weight:800;letter-spacing:.5px;z-index:3}.info h4{margin:0 0 6px;font-size:18px;color:var(--navy);font-weight:700}.desc{font-size:13px;color:var(--muted);line-height:1.5;margin-bottom:12px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}.stars{color:#f59e0b;font-size:14px;margin-bottom:8px}.price-row{display:flex;align-items:baseline;gap:8px;margin-top:auto}.price{font-size:22px;font-weight:800;color:var(--navy)}.old{text-decoration:line-through;color:#94a3b8;font-size:14px}.discount-tag{color:#16a34a;font-size:13px;font-weight:700}.stock{font-size:13px;color:#16a34a;margin-top:6px;font-weight:600}.add{width:100%;border:0;background:var(--navy);color:#fff;padding:12px;border-radius:14px;margin-top:16px;font-weight:750;font-size:14px}.add:hover{background:var(--orange)}
 .benefits{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}.benefit{padding:24px;border:1px solid var(--line);border-radius:20px;background:#fff}.benefit b{display:block;color:var(--navy);margin-bottom:6px;font-size:16px}.benefit span{font-size:14px;color:var(--muted);line-height:1.5}
 footer{background:var(--navy);color:#fff;padding:60px 20px 30px}.foot{max-width:1280px;margin:auto;display:grid;grid-template-columns:2fr 1fr 1fr;gap:40px}.foot h3{margin-top:0;font-size:20px}.foot p{color:#94a3b8;line-height:1.7}.bottom{text-align:center;border-top:1px solid rgba(255,255,255,0.1);margin-top:40px;padding-top:24px;color:#64748b;font-size:14px}
-.modal{display:none;position:fixed;inset:0;background:rgba(10,25,47,0.65);backdrop-filter:blur(4px);z-index:100;align-items:center;justify-content:center;padding:20px}.modal.show{display:flex}.box{background:#fff;border-radius:28px;max-width:760px;width:100%;max-height:90vh;overflow:auto;padding:32px;box-shadow:0 25px 50px -12px rgba(0,0,0,0.25)}.close{float:right;border:0;background:#f1f5f9;border-radius:50%;width:38px;height:38px;font-size:20px;color:var(--navy)}.close:hover{background:#e2e8f0}.box h2{margin-top:0;color:var(--navy);font-size:24px}.cartrow{display:grid;grid-template-columns:1fr auto auto;gap:16px;align-items:center;border-bottom:1px solid var(--line);padding:16px 0}.qty button{border:1px solid var(--line);background:#fff;border-radius:8px;width:32px;height:32px;font-weight:700}.summary{background:var(--soft);padding:20px;border-radius:18px;margin-top:20px;border:1px solid var(--line)}.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}.field{margin:8px 0}.field.full{grid-column:1/-1}.field label{display:block;font-size:13px;font-weight:700;margin-bottom:6px;color:var(--navy)}.field input,.field textarea,.field select{width:100%;border:1px solid var(--line);border-radius:12px;padding:12px;outline:0;background:#fff}.field input:focus,.field textarea:focus{border-color:var(--orange)}
-.upi-box{background:#fff;padding:20px;border-radius:16px;border:2px dashed var(--orange);margin:16px 0}
-.phonepe-main-btn{display:flex;align-items:center;justify-content:center;gap:10px;background:#5f259f;color:#fff;padding:14px;border-radius:14px;font-weight:800;font-size:15px;text-decoration:none;box-shadow:0 4px 12px rgba(95,37,159,0.25);margin-bottom:12px;transition:transform .15s}
-.phonepe-main-btn:active{transform:scale(0.98)}
-.upi-apps-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0}
-.upi-app-btn{display:flex;align-items:center;justify-content:center;gap:6px;padding:12px;border-radius:12px;font-weight:700;font-size:13px;text-decoration:none;box-shadow:0 2px 6px rgba(0,0,0,0.08);transition:transform .15s}
-.upi-app-btn:active{transform:scale(0.97)}
-.copy-btn{background:#e2e8f0;border:0;padding:6px 12px;border-radius:8px;font-size:12px;font-weight:700;color:var(--navy);margin-left:8px;cursor:pointer}
-.copy-btn:hover{background:#cbd5e1}
+.modal{display:none;position:fixed;inset:0;background:rgba(10,25,47,0.65);backdrop-filter:blur(4px);z-index:100;align-items:center;justify-content:center;padding:20px}.modal.show{display:flex}.box{background:#fff;border-radius:28px;max-width:640px;width:100%;max-height:90vh;overflow:auto;padding:32px;box-shadow:0 25px 50px -12px rgba(0,0,0,0.25)}.close{float:right;border:0;background:#f1f5f9;border-radius:50%;width:38px;height:38px;font-size:20px;color:var(--navy)}.close:hover{background:#e2e8f0}.box h2{margin-top:0;color:var(--navy);font-size:24px}.cartrow{display:grid;grid-template-columns:1fr auto auto;gap:16px;align-items:center;border-bottom:1px solid var(--line);padding:16px 0}.qty button{border:1px solid var(--line);background:#fff;border-radius:8px;width:32px;height:32px;font-weight:700}.summary{background:var(--soft);padding:20px;border-radius:18px;margin-top:20px;border:1px solid var(--line)}.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}.field{margin:8px 0}.field.full{grid-column:1/-1}.field label{display:block;font-size:13px;font-weight:700;margin-bottom:6px;color:var(--navy)}.field input,.field textarea,.field select{width:100%;border:1px solid var(--line);border-radius:12px;padding:12px;outline:0;background:#fff}.field input:focus,.field textarea:focus{border-color:var(--orange)}
+
+/* Streamlined Clean Payment Area */
+.clean-upi-box{background:#f8fafc;padding:20px;border-radius:18px;border:1.5px solid var(--line);margin:16px 0;text-align:center}
+.upi-badge{display:inline-flex;align-items:center;gap:8px;background:#fff;padding:8px 16px;border-radius:24px;border:1px solid var(--line);font-size:14px;font-weight:700;color:var(--navy);margin-top:8px}
+.copy-pill{border:0;background:var(--orange);color:#fff;font-size:12px;padding:4px 10px;border-radius:12px;font-weight:700;cursor:pointer}
+.copy-pill:hover{background:var(--orange-hover)}
+
 .notice{padding:16px;background:#f0fdf4;color:#166534;border-radius:14px;margin:16px 0;border:1px solid #bbf7d0;line-height:1.5}.muted{color:var(--muted)}
 @media(max-width:980px){.products{grid-template-columns:repeat(2,1fr)}.hero-in{grid-template-columns:1fr}.benefits{grid-template-columns:1fr 1fr}}
-@media(max-width:600px){.products{grid-template-columns:1fr}.cats,.benefits,.foot{grid-template-columns:1fr}.nav{flex-wrap:wrap}.search{order:3;flex-basis:100%}.grid{grid-template-columns:1fr}.upi-apps-grid{grid-template-columns:1fr}}
+@media(max-width:600px){.products{grid-template-columns:1fr}.cats,.benefits,.foot{grid-template-columns:1fr}.nav{flex-wrap:wrap}.search{order:3;flex-basis:100%}.grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
-<div class="top">🏎️ Free Shipping on Pro Car &amp; Motorbike Detailing Kits over ₹999 • Devarapus Auto</div>
+<div class="top">🏎️ Free Express Delivery on Detailing &amp; Maintenance Kits over ₹999 • Devarapus Auto</div>
 <header class="header"><nav class="nav">
 <img class="logo" id="headerLogo" alt="Devarapus Auto Care">
-<div class="search"><input id="q" placeholder="Search Cleaning Kits, Ceramic Coatings, Chain Lubes..." oninput="render()"><button onclick="render()">⌕</button></div>
-<div class="links"><a href="#home">Home</a><a href="#categories">Categories</a><a href="#shop">Shop Essentials</a></div>
-<a href="admin.html" target="_blank" class="pill light">🔑 Admin Portal</a>
+<div class="search"><input id="q" placeholder="Search Cleaning Kits, Chain Lubes..." oninput="render()"><button onclick="render()">⌕</button></div>
+<div class="links"><a href="#home">Home</a><a href="#categories">Categories</a><a href="#shop">Shop</a></div>
+<a href="admin.html" target="_blank" class="pill light">🔑 Admin</a>
 <button class="pill dark" onclick="openCart()">🛒 Cart (<span id="count">0</span>)</button>
 </nav></header>
 
-<section class="hero" id="home"><div class="hero-in"><div><div class="eyebrow">PROFESSIONAL AUTOMOTIVE CARE</div><h1>Maintain showroom shine.<br><span>Ride with pride.</span></h1><p>Premium detailing shampoos, ceramic foam washes, high-grade chain lubes &amp; engine care products designed for automotive enthusiasts.</p><button class="pill" style="background:var(--orange);color:#fff;padding:14px 28px;font-size:16px" onclick="document.getElementById('shop').scrollIntoView()">Explore Auto Care Kits →</button></div><div class="hero-card"><img id="heroLogo" alt="Devarapus Auto Care"><strong>CAR &amp; MOTORBIKE CARE • CLEANING &amp; MAINTENANCE</strong></div></div></section>
+<section class="hero" id="home"><div class="hero-in"><div><div class="eyebrow">PROFESSIONAL AUTOMOTIVE CARE</div><h1>Maintain showroom shine.<br><span>Ride with pride.</span></h1><p>Premium detailing shampoos, ceramic foam washes, high-grade chain lubes &amp; engine care products designed for automotive enthusiasts.</p><button class="pill" style="background:var(--orange);color:#fff;padding:14px 28px;font-size:16px" onclick="document.getElementById('shop').scrollIntoView()">Shop Auto Care Kits →</button></div><div class="hero-card"><img id="heroLogo" alt="Devarapus Auto Care"><strong>CAR &amp; MOTORBIKE CARE • CLEANING &amp; MAINTENANCE</strong></div></div></section>
 
-<section class="wrap" id="categories"><div class="section-head"><h2>Shop by Category</h2><p>Everything you need for complete exterior and mechanical care.</p></div><div class="cats">
-<div class="cat cleaning"><h3>✨ Cleaning &amp; Detailing Kits</h3><p>Foam shampoos, microfiber plush towels, ceramic spray wax &amp; interior polish.</p><button onclick="category='cleaning';render();document.getElementById('shop').scrollIntoView()">Explore Cleaning Kits</button></div>
+<section class="wrap" id="categories"><div class="section-head"><h2>Shop by Category</h2><p>Everything you need for complete vehicle care.</p></div><div class="cats">
+<div class="cat cleaning"><h3>✨ Cleaning &amp; Detailing Kits</h3><p>Foam shampoos, microfiber towels, ceramic spray wax &amp; interior polish.</p><button onclick="category='cleaning';render();document.getElementById('shop').scrollIntoView()">Explore Cleaning Kits</button></div>
 <div class="cat maint"><h3>🔧 Maintenance &amp; Engine Care</h3><p>Chain cleaners, lube sprays, brake fluids, coolant &amp; engine flush solutions.</p><button onclick="category='maintenance';render();document.getElementById('shop').scrollIntoView()">Explore Maintenance</button></div>
 </div></section>
 
@@ -67,102 +59,36 @@ footer{background:var(--navy);color:#fff;padding:60px 20px 30px}.foot{max-width:
 <footer><div class="foot"><div><h3>Devarapus Auto Care</h3><p>Engineered for high performance car and motorbike detailing and maintenance.</p></div><div><h3>Catalog</h3><p>Foam Wash Kits<br>Chain Clean &amp; Lube<br>Ceramic Coatings<br>Scratch Removers</p></div><div><h3>Quick Links</h3><p>Shipping Policy<br>Returns Info<br><a href="admin.html" target="_blank" style="color:#f58220;text-decoration:none">Admin Login</a></p></div></div><div class="bottom">© 2026 Devarapus Auto Care. All rights reserved.</div></footer>
 
 <div class="modal" id="cartModal"><div class="box"><button class="close" onclick="closeM('cartModal')">×</button><h2>Your Cart</h2><div id="cartItems"></div><div class="summary">Total Amount: <b style="font-size:20px;color:var(--navy)">₹<span id="cartTotal">0</span></b><br><button class="pill" style="margin-top:16px;background:var(--orange);color:#fff;width:100%;justify-content:center" onclick="checkout()">Proceed to Checkout →</button></div></div></div>
-<div class="modal" id="checkoutModal"><div class="box"><button class="close" onclick="closeM('checkoutModal')">×</button><h2>Checkout &amp; Payment</h2><div id="checkoutBox"></div></div></div>
+<div class="modal" id="checkoutModal"><div class="box"><button class="close" onclick="closeM('checkoutModal')">×</button><h2>Delivery &amp; Payment</h2><div id="checkoutBox"></div></div></div>
 
 <script>
-// --- SUPABASE CLIENT CONFIGURATION ---
 const SUPABASE_URL = "https://xqiqnzkiauekegzojavi.supabase.co";
 const SUPABASE_KEY = "sb_publishable_90aJd7OYoDJASIqcjfu4zA_lHjZNXCN";
 const db = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-// --- YOUR OFFICIAL UPI ID ---
 const STORE_UPI_ID = "dvenkatasaikumar@ybl";
 
 function createAutoLogoUri() {
  const c = document.createElement('canvas'); c.width = 600; c.height = 360; const ctx = c.getContext('2d');
  ctx.fillStyle = '#ffffff'; ctx.fillRect(0,0,600,360);
- ctx.fillStyle = '#0a192f';
- ctx.beginPath(); ctx.moveTo(150,150); ctx.lineTo(240,70); ctx.lineTo(360,70); ctx.lineTo(450,150); ctx.closePath(); ctx.fill();
- ctx.fillStyle = '#ffffff';
- ctx.beginPath(); ctx.moveTo(250,85); ctx.lineTo(350,85); ctx.lineTo(410,140); ctx.lineTo(190,140); ctx.closePath(); ctx.fill();
- ctx.fillStyle = '#f58220';
- ctx.beginPath(); ctx.roundRect(120, 140, 360, 50, 16); ctx.fill();
- ctx.fillStyle = '#0a192f';
- ctx.beginPath(); ctx.arc(200, 195, 30, 0, Math.PI*2); ctx.arc(400, 195, 30, 0, Math.PI*2); ctx.fill();
- ctx.fillStyle = '#ffffff';
- ctx.beginPath(); ctx.arc(200, 195, 12, 0, Math.PI*2); ctx.arc(400, 195, 12, 0, Math.PI*2); ctx.fill();
- ctx.fillStyle = '#0a192f'; ctx.font = '900 48px Georgia, serif'; ctx.textAlign = 'center';
- ctx.fillText('DEVARAPUS', 300, 275);
- ctx.fillStyle = '#f58220'; ctx.font = '800 15px Inter, sans-serif'; ctx.letterSpacing = '3px';
- ctx.fillText('CAR & MOTORBIKE CARE', 300, 305);
- ctx.fillStyle = '#64748b'; ctx.font = '700 12px Inter, sans-serif';
- ctx.fillText('CLEANING KITS  •  MAINTENANCE & CARE', 300, 335);
+ ctx.fillStyle = '#0a192f'; ctx.beginPath(); ctx.moveTo(150,150); ctx.lineTo(240,70); ctx.lineTo(360,70); ctx.lineTo(450,150); ctx.closePath(); ctx.fill();
+ ctx.fillStyle = '#ffffff'; ctx.beginPath(); ctx.moveTo(250,85); ctx.lineTo(350,85); ctx.lineTo(410,140); ctx.lineTo(190,140); ctx.closePath(); ctx.fill();
+ ctx.fillStyle = '#f58220'; ctx.beginPath(); ctx.roundRect(120, 140, 360, 50, 16); ctx.fill();
+ ctx.fillStyle = '#0a192f'; ctx.beginPath(); ctx.arc(200, 195, 30, 0, Math.PI*2); ctx.arc(400, 195, 30, 0, Math.PI*2); ctx.fill();
+ ctx.fillStyle = '#ffffff'; ctx.beginPath(); ctx.arc(200, 195, 12, 0, Math.PI*2); ctx.arc(400, 195, 12, 0, Math.PI*2); ctx.fill();
+ ctx.fillStyle = '#0a192f'; ctx.font = '900 48px Georgia, serif'; ctx.textAlign = 'center'; ctx.fillText('DEVARAPUS', 300, 275);
+ ctx.fillStyle = '#f58220'; ctx.font = '800 15px Inter, sans-serif'; ctx.letterSpacing = '3px'; ctx.fillText('CAR & MOTORBIKE CARE', 300, 305);
+ ctx.fillStyle = '#64748b'; ctx.font = '700 12px Inter, sans-serif'; ctx.fillText('CLEANING KITS  •  MAINTENANCE & CARE', 300, 335);
  return c.toDataURL();
 }
 document.getElementById('headerLogo').src = createAutoLogoUri();
 document.getElementById('heroLogo').src = createAutoLogoUri();
 
 const starter = [
- {
-   id: 1, 
-   name: "All-in-One Car & Bike Foam Detailing Kit", 
-   cat: "cleaning", 
-   price: 1299, 
-   old: 1999, 
-   discount: 35,
-   stock: 25, 
-   badge: "BESTSELLER", 
-   rating: 5, 
-   desc: "Complete exterior wash kit featuring pH-neutral snow foam shampoo, high-GSM microfiber wash mitt, and ultra-plush drying towel.",
-   images: [
-     "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 300'><rect width='300' height='300' rx='20' fill='%23e0f2fe'/><path d='M100 110 h100 v120 h-100 z' fill='%230a192f'/><path d='M120 70 h60 v40 h-60 z' fill='%23f58220'/><circle cx='80' cy='220' r='25' fill='%23f58220'/><text x='150' y='265' font-family='sans-serif' font-size='16' font-weight='bold' fill='%230a192f' text-anchor='middle'>Foam Wash Kit</text></svg>"
-   ]
- },
- {
-   id: 2, 
-   name: "Motorbike Chain Clean & Lube Combo (500ml)", 
-   cat: "maintenance", 
-   price: 649, 
-   old: 899, 
-   discount: 28,
-   stock: 30, 
-   badge: "MUST HAVE", 
-   rating: 5, 
-   desc: "Heavy-duty O/X/Z ring compatible chain cleaner spray with high-adhesion synthetic chain lube and 3-sided grunge cleaning brush.",
-   images: [
-     "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 300'><rect width='300' height='300' rx='20' fill='%23fff3e6'/><rect x='80' y='90' width='55' height='130' rx='10' fill='%23f58220'/><rect x='165' y='90' width='55' height='130' rx='10' fill='%230a192f'/><text x='150' y='265' font-family='sans-serif' font-size='16' font-weight='bold' fill='%230a192f' text-anchor='middle'>Chain Lube & Cleaner</text></svg>"
-   ]
- },
- {
-   id: 3, 
-   name: "9H Hydrophobic Ceramic Wax Spray (250ml)", 
-   cat: "cleaning", 
-   price: 899, 
-   old: 1399, 
-   discount: 36,
-   stock: 18, 
-   badge: "POPULAR", 
-   rating: 4.5, 
-   desc: "Nano-ceramic hydrophobic sealant creating an intense mirror gloss, UV protection, and extreme water beading for over 6 months.",
-   images: [
-     "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 300'><rect width='300' height='300' rx='20' fill='%23e0f2fe'/><rect x='110' y='100' width='80' height='120' rx='16' fill='%230a192f'/><path d='M130 60 h40 v40 h-40 z' fill='%23f58220'/><path d='M130 60 L100 80' stroke='%23f58220' stroke-width='8'/><text x='150' y='265' font-family='sans-serif' font-size='16' font-weight='bold' fill='%230a192f' text-anchor='middle'>Ceramic Spray</text></svg>"
-   ]
- },
- {
-   id: 4, 
-   name: "Synthetic 4T Engine Oil & Flush Treatment", 
-   cat: "maintenance", 
-   price: 1149, 
-   old: 1599, 
-   discount: 28,
-   stock: 14, 
-   badge: "PREMIUM", 
-   rating: 5, 
-   desc: "Fully synthetic 10W-50 racing grade engine oil combined with deep cleaning engine flush additive to restore engine compression.",
-   images: [
-     "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 300'><rect width='300' height='300' rx='20' fill='%23fff3e6'/><path d='M90 90 h120 v120 h-120 z' fill='%230a192f'/><rect x='110' y='60' width='80' height='30' fill='%23f58220'/><text x='150' y='265' font-family='sans-serif' font-size='16' font-weight='bold' fill='%230a192f' text-anchor='middle'>Engine Oil 4T</text></svg>"
-   ]
- }
+ { id: 1, name: "All-in-One Car & Bike Foam Detailing Kit", cat: "cleaning", price: 1299, old: 1999, discount: 35, stock: 25, badge: "BESTSELLER", rating: 5, desc: "Complete exterior wash kit with snow foam shampoo, wash mitt, and microfiber towel.", images: ["data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 300'><rect width='300' height='300' rx='20' fill='%23e0f2fe'/><path d='M100 110 h100 v120 h-100 z' fill='%230a192f'/><path d='M120 70 h60 v40 h-60 z' fill='%23f58220'/><circle cx='80' cy='220' r='25' fill='%23f58220'/><text x='150' y='265' font-family='sans-serif' font-size='16' font-weight='bold' fill='%230a192f' text-anchor='middle'>Foam Wash Kit</text></svg>"] },
+ { id: 2, name: "Motorbike Chain Clean & Lube Combo (500ml)", cat: "maintenance", price: 649, old: 899, discount: 28, stock: 30, badge: "MUST HAVE", rating: 5, desc: "O/X/Z ring compatible chain cleaner spray with high-adhesion lube and cleaning brush.", images: ["data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 300'><rect width='300' height='300' rx='20' fill='%23fff3e6'/><rect x='80' y='90' width='55' height='130' rx='10' fill='%23f58220'/><rect x='165' y='90' width='55' height='130' rx='10' fill='%230a192f'/><text x='150' y='265' font-family='sans-serif' font-size='16' font-weight='bold' fill='%230a192f' text-anchor='middle'>Chain Lube & Cleaner</text></svg>"] },
+ { id: 3, name: "9H Hydrophobic Ceramic Wax Spray (250ml)", cat: "cleaning", price: 899, old: 1399, discount: 36, stock: 18, badge: "POPULAR", rating: 4.5, desc: "Nano-ceramic hydrophobic sealant creating an intense mirror gloss and UV protection.", images: ["data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 300'><rect width='300' height='300' rx='20' fill='%23e0f2fe'/><rect x='110' y='100' width='80' height='120' rx='16' fill='%230a192f'/><path d='M130 60 h40 v40 h-40 z' fill='%23f58220'/><path d='M130 60 L100 80' stroke='%23f58220' stroke-width='8'/><text x='150' y='265' font-family='sans-serif' font-size='16' font-weight='bold' fill='%230a192f' text-anchor='middle'>Ceramic Spray</text></svg>"] },
+ { id: 4, name: "Synthetic 4T Engine Oil & Flush Treatment", cat: "maintenance", price: 1149, old: 1599, discount: 28, stock: 14, badge: "PREMIUM", rating: 5, desc: "Fully synthetic 10W-50 racing grade engine oil with deep cleaning engine flush.", images: ["data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 300'><rect width='300' height='300' rx='20' fill='%23fff3e6'/><path d='M90 90 h120 v120 h-120 z' fill='%230a192f'/><rect x='110' y='60' width='80' height='30' fill='%23f58220'/><text x='150' y='265' font-family='sans-serif' font-size='16' font-weight='bold' fill='%230a192f' text-anchor='middle'>Engine Oil 4T</text></svg>"] }
 ];
 
 let products = [];
@@ -187,8 +113,7 @@ async function fetchProducts() {
 function setProductImg(prodId, imgUrl, el) {
   const imgElem = document.getElementById(`prod-img-${prodId}`);
   if(imgElem) imgElem.src = imgUrl;
-  const parent = el.parentElement;
-  parent.querySelectorAll('.thumb').forEach(t => t.classList.remove('active'));
+  el.parentElement.querySelectorAll('.thumb').forEach(t => t.classList.remove('active'));
   el.classList.add('active');
 }
 
@@ -199,13 +124,12 @@ function render(){
  
  document.getElementById("products").innerHTML = list.length ? list.map(p => {
    const mainImg = (p.images && p.images.length) ? p.images[0] : (p.img || "");
-   const hasMultiple = p.images && p.images.length > 1;
    return `
    <article class="product">
      <span class="badge">${p.badge||"NEW"}</span>
      <div class="pimg">
        <img id="prod-img-${p.id}" src="${mainImg}" alt="${p.name}">
-       ${hasMultiple ? `<div class="thumbs">${p.images.map((img, i) => `<img class="thumb ${i===0?'active':''}" src="${img}" onclick="setProductImg(${p.id}, '${img}', this)">`).join('')}</div>` : ''}
+       ${p.images && p.images.length > 1 ? `<div class="thumbs">${p.images.map((img, i) => `<img class="thumb ${i===0?'active':''}" src="${img}" onclick="setProductImg(${p.id}, '${img}', this)">`).join('')}</div>` : ''}
      </div>
      <div class="info">
        <h4>${p.name}</h4>
@@ -245,14 +169,6 @@ function drawCart(){
 function qty(id,n){ let x=cart.find(a=>a.id===id), p=products.find(a=>a.id===id); if(!x)return; if(n>0&&x.qty>=p.stock)return; x.qty+=n; if(x.qty<=0) cart=cart.filter(a=>a.id!==id); saveCart(); drawCart(); }
 function removeItem(id){ cart=cart.filter(x=>x.id!==id); saveCart(); drawCart(); }
 
-function copyAndOpenPhonePe() {
-  navigator.clipboard.writeText(STORE_UPI_ID);
-  toast("UPI ID copied: " + STORE_UPI_ID);
-  setTimeout(() => {
-    window.location.href = "phonepe://pay";
-  }, 500);
-}
-
 function copyUpiId() {
   navigator.clipboard.writeText(STORE_UPI_ID);
   toast("UPI ID copied: " + STORE_UPI_ID);
@@ -261,59 +177,43 @@ function copyUpiId() {
 function checkout(){
  if(!cart.length){ toast("Your cart is empty"); return; }
  closeM("cartModal");
- const currentTempOrderId = "DV-AUTO-" + Date.now().toString().slice(-5);
+ const currentTempOrderId = "DV-" + Date.now().toString().slice(-5);
  let total = cart.reduce((a,x)=>a+(products.find(p=>p.id===x.id)?.price||0)*x.qty,0);
  
- const upiQuery = `pa=${encodeURIComponent(STORE_UPI_ID)}&pn=${encodeURIComponent("Devarapus Auto Care")}&am=${total.toFixed(2)}&cu=INR&tn=${encodeURIComponent("Order "+currentTempOrderId)}`;
- const qrApiUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent("upi://pay?" + upiQuery)}`;
+ const upiLink = `upi://pay?pa=${encodeURIComponent(STORE_UPI_ID)}&pn=DevarapusAutoCare&am=${total.toFixed(2)}&cu=INR`;
+ const qrApiUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(upiLink)}`;
  
  document.getElementById("checkoutBox").innerHTML = `
    <form onsubmit="placeOrder(event, '${currentTempOrderId}')">
      <div class="grid">
-       <div class="field"><label>Full Name *</label><input id="name" placeholder="e.g. Sai Kumar" required></div>
-       <div class="field"><label>Mobile Number *</label><input id="phone" placeholder="10-digit mobile" pattern="[0-9]{10}" required></div>
-       <div class="field full"><label>Delivery Address *</label><textarea id="address" rows="2" placeholder="House/Flat No, Street Name, Area" required></textarea></div>
+       <div class="field"><label>Full Name *</label><input id="name" placeholder="Enter full name" required></div>
+       <div class="field"><label>Mobile Number *</label><input id="phone" placeholder="10-digit number" pattern="[0-9]{10}" required></div>
+       <div class="field full"><label>Delivery Address *</label><textarea id="address" rows="2" placeholder="House/Flat No, Area, Landmark" required></textarea></div>
        <div class="field"><label>City *</label><input id="city" required></div>
        <div class="field"><label>PIN Code *</label><input id="pin" pattern="[0-9]{6}" required></div>
        <div class="field full">
-         <label>Select Payment Method</label>
+         <label>Payment Method</label>
          <select id="payment" onchange="togglePaymentArea(this.value)">
-           <option value="UPI">PhonePe / UPI Direct Payment</option>
-           <option value="Cash on Delivery">Cash on Delivery</option>
+           <option value="UPI">Scan QR / UPI Payment (PhonePe, GPay, Paytm)</option>
+           <option value="Cash on Delivery">Cash on Delivery (Pay upon delivery)</option>
          </select>
        </div>
      </div>
 
-     <div id="upiArea" class="upi-box">
-       <div style="font-weight:700;color:var(--navy);font-size:14px;margin-bottom:8px">⚡ 1-Tap Direct UPI Options:</div>
-       
-       <!-- Dedicated PhonePe Intent Button -->
-       <a href="phonepe://pay?${upiQuery}" class="phonepe-main-btn">
-         🟣 Pay ₹${total.toLocaleString("en-IN")} via PhonePe Directly
-       </a>
-
-       <div class="upi-apps-grid">
-         <a href="upi://pay?${upiQuery}" class="upi-app-btn" style="background:#5f259f;color:#fff;">🟣 Open PhonePe / App</a>
-         <a href="javascript:void(0)" onclick="copyAndOpenPhonePe()" class="upi-app-btn" style="background:#0a192f;color:#fff;">📋 Copy UPI &amp; Open PhonePe</a>
-       </div>
-
-       <div style="text-align:center;margin:16px 0;background:#f8fafc;padding:12px;border-radius:12px">
-         <div style="font-size:12px;font-weight:700;color:var(--navy);margin-bottom:4px">OR SCAN QR WITH PHONEPE / GPAY</div>
-         <img src="${qrApiUrl}" alt="Live UPI QR Code" style="width:140px;height:140px;margin:8px 0;border-radius:10px;border:1px solid #e2e8f0">
-         <div style="font-size:13px;color:var(--navy);margin-top:4px">
-           UPI ID: <b>${STORE_UPI_ID}</b>
-           <button type="button" class="copy-btn" onclick="copyUpiId()">📋 Copy</button>
+     <!-- Simple, 100% Reliable QR Payment Box -->
+     <div id="upiArea" class="clean-upi-box">
+       <div style="font-weight:700;color:var(--navy);font-size:14px;margin-bottom:8px">Scan with PhonePe, GPay, or Paytm:</div>
+       <img src="${qrApiUrl}" alt="UPI QR" style="width:150px;height:150px;border-radius:12px;border:1px solid #e2e8f0;background:#fff;padding:6px">
+       <div style="margin-top:8px">
+         <div class="upi-badge">
+           <span>${STORE_UPI_ID}</span>
+           <button type="button" class="copy-pill" onclick="copyUpiId()">Copy</button>
          </div>
-       </div>
-
-       <div class="field full">
-         <label>UPI UTR / Transaction ID (Enter after payment to confirm)</label>
-         <input id="utr" placeholder="12-digit UTR from PhonePe payment receipt" maxlength="16">
        </div>
      </div>
 
-     <div class="summary">Total Payable: <b style="font-size:20px;color:var(--navy)">₹${total.toLocaleString("en-IN")}</b></div>
-     <button class="pill" style="margin-top:16px;background:var(--orange);color:#fff;width:100%;justify-content:center;font-size:16px" type="submit">Confirm &amp; Place Order →</button>
+     <div class="summary">Total Payable: <b style="font-size:22px;color:var(--navy)">₹${total.toLocaleString("en-IN")}</b></div>
+     <button class="pill" style="margin-top:16px;background:var(--orange);color:#fff;width:100%;justify-content:center;font-size:16px" type="submit">Place Order →</button>
    </form>
  `;
  document.getElementById("checkoutModal").classList.add("show");
@@ -327,7 +227,6 @@ function togglePaymentArea(val){
 async function placeOrder(e, orderNumber){
  e.preventDefault();
  let total = cart.reduce((a,x)=>a+(products.find(p=>p.id===x.id)?.price||0)*x.qty,0);
- const utrVal = document.getElementById("utr") ? document.getElementById("utr").value.trim() : "";
  
  let order = {
    number: orderNumber,
@@ -336,7 +235,7 @@ async function placeOrder(e, orderNumber){
    address: document.getElementById("address").value,
    city: document.getElementById("city").value,
    pin: document.getElementById("pin").value,
-   payment: document.getElementById("payment").value + (utrVal ? ` (UTR: ${utrVal})` : ''),
+   payment: document.getElementById("payment").value,
    total,
    items: cart.map(c => {
      let p = products.find(prod => prod.id === c.id);
@@ -348,14 +247,14 @@ async function placeOrder(e, orderNumber){
 
  const { error } = await db.from('orders').insert([order]);
  if (error) {
-   alert("Error placing order: " + error.message);
+   alert("Error saving order: " + error.message);
    return;
  }
 
  cart = []; saveCart();
  document.getElementById("checkoutBox").innerHTML = `
-   <div class="notice">🎉 Order placed successfully! Order ID: <b>${order.number}</b>.</div>
-   <p>Your order for auto care essentials is confirmed.</p>
+   <div class="notice">🎉 <b>Order Confirmed!</b> Order ID: <b>${order.number}</b></div>
+   <p>Thank you! Your order details have been received and we are preparing your parcel.</p>
    <button class="pill" style="background:var(--navy);color:#fff;margin-top:10px" onclick="closeM('checkoutModal')">Continue Shopping</button>
  `;
 }
