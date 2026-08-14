@@ -3,97 +3,120 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Devarapus | Admin Portal</title>
+<title>Devarapus Auto Care | Admin Portal</title>
 <link rel="icon" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%230d2342'/><text x='50' y='70' font-size='60' font-weight='bold' text-anchor='middle' fill='%23f58220' font-family='Georgia, serif'>D</text></svg>">
-<!-- Supabase JS Client -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
-:root{--navy:#0d2342;--orange:#f58220;--ink:#172337;--muted:#6b7688;--line:#e2e8f0;--soft:#f8fafc;--white:#ffffff}
+:root{--navy:#0a192f;--orange:#f58220;--ink:#1e293b;--muted:#64748b;--line:#e2e8f0;--soft:#f8fafc;--white:#ffffff}
 *{box-sizing:border-box}body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;color:var(--ink);background:#f1f5f9}
 header{background:var(--navy);color:#fff;padding:16px 24px;display:flex;justify-content:space-between;align-items:center}
 header h1{margin:0;font-size:20px;display:flex;align-items:center;gap:10px}
-.wrap{max-width:1200px;margin:30px auto;padding:0 20px}
+.header-actions{display:flex;align-items:center;gap:12px}
+.wrap{max-width:1240px;margin:30px auto;padding:0 20px}
 .card{background:#fff;border-radius:20px;padding:24px;border:1px solid var(--line);box-shadow:0 10px 25px -5px rgba(0,0,0,0.05);margin-bottom:24px}
 .card h2{margin-top:0;color:var(--navy);font-size:20px;border-bottom:1px solid var(--line);padding-bottom:12px;display:flex;justify-content:space-between;align-items:center}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 .field{margin:8px 0}.field.full{grid-column:1/-1}
 .field label{display:block;font-size:13px;font-weight:700;margin-bottom:6px;color:var(--navy)}
 .field input,.field select,.field textarea{width:100%;border:1px solid var(--line);border-radius:10px;padding:12px;outline:0;background:#fff}
-.field input:focus{border-color:var(--orange)}
+.field input:focus,.field textarea:focus{border-color:var(--orange)}
 .btn-primary{background:var(--orange);color:#fff;border:0;padding:12px 24px;border-radius:12px;cursor:pointer;font-weight:700;font-size:14px;transition:.2s}
 .btn-primary:hover{background:#d96f14}
-.btn-danger{background:#ef4444;color:#fff;border:0;padding:8px 14px;border-radius:10px;cursor:pointer;font-weight:600}
-.btn-danger:hover{background:#dc2626}
+.btn-orders{background:#10b981;color:#fff;border:0;padding:10px 18px;border-radius:12px;cursor:pointer;font-weight:700;font-size:14px;display:inline-flex;align-items:center;gap:6px}
+.btn-orders:hover{background:#059669}
+.btn-danger{background:#ef4444;color:#fff;border:0;padding:6px 12px;border-radius:8px;cursor:pointer;font-weight:600;font-size:12px}
 .btn-refresh{background:var(--navy);color:#fff;border:0;padding:8px 16px;border-radius:10px;cursor:pointer;font-weight:700}
+.stock-control{display:flex;align-items:center;gap:6px;margin:8px 0}
+.stock-control button{border:1px solid var(--line);background:#fff;border-radius:6px;width:28px;height:28px;font-weight:700;cursor:pointer}
+.stock-control input{width:54px;text-align:center;padding:4px;border:1px solid var(--line);border-radius:6px}
+.product-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:16px}
+.prod-card{border:1px solid var(--line);border-radius:16px;padding:16px;background:#fff;display:flex;flex-direction:column}
+.prod-card img{width:100%;height:160px;object-fit:contain;border-radius:8px;background:#f8fafc;margin-bottom:8px}
+.preview-grid{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
+.preview-thumb{width:70px;height:70px;border:1px solid var(--line);border-radius:8px;object-fit:cover}
 .order-box{border:1px solid var(--line);border-radius:16px;padding:20px;margin-bottom:16px;background:var(--soft)}
 .order-header{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--line);padding-bottom:12px;margin-bottom:12px}
-.tag{background:#e0f2fe;color:#0369a1;padding:4px 10px;border-radius:20px;font-size:12px;font-weight:700}
 .customer-info{display:grid;grid-template-columns:1fr 1fr;gap:16px;background:#fff;padding:16px;border-radius:12px;border:1px solid var(--line);margin-bottom:12px}
 .items-list{background:#fff;padding:16px;border-radius:12px;border:1px solid var(--line)}
-.item-row{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px stroke var(--line)}
-.product-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:16px}
-.prod-card{border:1px solid var(--line);border-radius:14px;padding:12px;background:#fff;text-align:center}
-.prod-card img{width:100%;height:120px;object-fit:contain;border-radius:8px;background:#f8fafc;margin-bottom:8px}
-.preview-box{width:100px;height:100px;border:2px dashed var(--line);border-radius:12px;display:flex;align-items:center;justify-content:center;overflow:hidden;background:var(--soft)}
-.preview-box img{width:100%;height:100%;object-fit:contain}
-@media(max-width:900px){.product-grid{grid-template-columns:repeat(2,1fr)}.grid{grid-template-columns:1fr}}
+.item-row{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--line)}
+.modal{display:none;position:fixed;inset:0;background:rgba(10,25,47,0.7);backdrop-filter:blur(4px);z-index:100;align-items:center;justify-content:center;padding:20px}
+.modal.show{display:flex}
+.modal-box{background:#fff;border-radius:24px;max-width:850px;width:100%;max-height:88vh;overflow:auto;padding:30px}
+.auth-box{max-width:400px;text-align:center}
+@media(max-width:900px){.product-grid{grid-template-columns:1fr 1fr}.grid{grid-template-columns:1fr}}
+@media(max-width:600px){.product-grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
 
 <header>
-  <h1>📦 Devarapus Cloud Admin Portal</h1>
-  <a href="index.html" target="_blank" style="color:#fff;text-decoration:none;font-weight:600">🌐 View Live Storefront</a>
+  <h1>🏎️ Devarapus Auto Care Admin</h1>
+  <div class="header-actions">
+    <button class="btn-orders" onclick="openOrdersModal()">📦 View Received Orders (<span id="ordersCount">0</span>)</button>
+    <a href="index.html" target="_blank" style="color:#fff;text-decoration:none;font-weight:600;font-size:14px">🌐 Storefront</a>
+  </div>
 </header>
 
-<div class="wrap">
-  <!-- Upload Section -->
+<div class="wrap" id="mainDashboard" style="display:none">
+  <!-- Upload Product Card -->
   <div class="card">
-    <h2>➕ Upload New Product (Cloud Database)</h2>
+    <h2>➕ Add Auto Care Product (Description, Multiple Photos &amp; Stock)</h2>
     <form onsubmit="saveProduct(event)">
       <div class="grid">
-        <div class="field"><label>Product Title *</label><input id="pName" placeholder="e.g. Smart Air Fryer" required></div>
+        <div class="field"><label>Product Title *</label><input id="pName" placeholder="e.g. Ceramic Foam Wash & Detailing Kit" required></div>
         <div class="field">
           <label>Category *</label>
           <select id="pCat" required>
-            <option value="home">Home & Kitchen</option>
-            <option value="electronics">Electronics</option>
+            <option value="cleaning">Car &amp; Motorbike Care > Cleaning Kits</option>
+            <option value="maintenance">Car &amp; Motorbike Care > Maintenance &amp; Care</option>
           </select>
         </div>
-        <div class="field"><label>Selling Price (₹) *</label><input id="pPrice" type="number" placeholder="2499" required></div>
-        <div class="field"><label>Original Price / MRP (₹)</label><input id="pOld" type="number" placeholder="3999"></div>
-        <div class="field"><label>Stock Quantity *</label><input id="pStock" type="number" value="15" required></div>
-        <div class="field"><label>Badge Tag</label><input id="pBadge" placeholder="e.g. NEW, 30% OFF"></div>
-        
+        <div class="field"><label>Selling Price (₹) *</label><input id="pPrice" type="number" placeholder="1299" required></div>
+        <div class="field"><label>Original Price / MRP (₹)</label><input id="pOld" type="number" placeholder="1999" oninput="calculateDiscount()"></div>
+        <div class="field"><label>Discount Percentage (%)</label><input id="pDiscount" type="number" placeholder="Auto calculated or enter manually"></div>
+        <div class="field"><label>Initial Stock Quantity *</label><input id="pStock" type="number" value="20" required></div>
+        <div class="field"><label>Badge Tag</label><input id="pBadge" placeholder="e.g. BESTSELLER, 30% OFF"></div>
+        <div class="field full"><label>Product Description *</label><textarea id="pDesc" rows="3" placeholder="Key formula benefits, safe on paint surfaces, included accessories..." required></textarea></div>
         <div class="field full">
-          <label>Upload Product Photo *</label>
-          <input type="file" id="pImgFile" accept="image/*" onchange="previewImage(event)">
-          <div style="display:flex;align-items:center;gap:16px;margin-top:10px">
-            <div class="preview-box" id="pPreview"><span>No Image</span></div>
-            <span style="font-size:12px;color:var(--muted)">Images are automatically converted and synced to all visitors globally.</span>
-          </div>
+          <label>Upload Multiple Product Photos (Select one or more) *</label>
+          <input type="file" id="pImgFiles" accept="image/*" multiple onchange="handleMultipleImages(event)">
+          <div class="preview-grid" id="previewContainer"></div>
         </div>
       </div>
-      <button type="submit" class="btn-primary" style="margin-top:16px" id="saveBtn">Publish Product Globally →</button>
+      <button type="submit" class="btn-primary" style="margin-top:16px" id="saveBtn">Publish to Live Storefront →</button>
     </form>
   </div>
 
-  <!-- Live Products -->
+  <!-- Store Inventory Management Card -->
   <div class="card">
     <h2>
-      <span>🛒 Live Products Catalogue</span>
-      <button class="btn-refresh" onclick="loadProducts()">Refresh Products</button>
+      <span>🛒 Manage Products &amp; Stock Levels</span>
+      <button class="btn-refresh" onclick="loadProducts()">Refresh Catalogue</button>
     </h2>
-    <div id="productsContainer" class="product-grid">Loading cloud products...</div>
+    <div id="productsContainer" class="product-grid">Loading catalogue...</div>
   </div>
+</div>
 
-  <!-- Live Orders -->
-  <div class="card">
-    <h2>
-      <span>📋 Customer Orders</span>
-      <button class="btn-refresh" onclick="loadOrders()">Refresh Orders</button>
-    </h2>
-    <div id="ordersContainer">Loading cloud orders...</div>
+<!-- Password Modal -->
+<div class="modal show" id="authModal">
+  <div class="modal-box auth-box">
+    <h2 style="justify-content:center">🔒 Admin Login</h2>
+    <p style="color:var(--muted);font-size:14px">Please enter your administrator password to proceed.</p>
+    <form onsubmit="verifyPassword(event)">
+      <input type="password" id="adminPass" placeholder="Enter password" style="width:100%;padding:12px;border:1px solid var(--line);border-radius:10px;margin-bottom:16px;outline:0" required>
+      <button type="submit" class="btn-primary" style="width:100%">Unlock Admin Panel</button>
+    </form>
+  </div>
+</div>
+
+<!-- Received Orders Modal -->
+<div class="modal" id="ordersModal">
+  <div class="modal-box">
+    <div style="display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--line);padding-bottom:14px;margin-bottom:20px">
+      <h2 style="margin:0;border:0;padding:0">📦 Received Customer Orders</h2>
+      <button class="btn-danger" onclick="closeModal('ordersModal')">✕ Close</button>
+    </div>
+    <div id="ordersContainer">Loading orders...</div>
   </div>
 </div>
 
@@ -103,26 +126,56 @@ const SUPABASE_URL = "https://xqiqnzkiauekegzojavi.supabase.co";
 const SUPABASE_KEY = "sb_publishable_90aJd7OYoDJASIqcjfu4zA_lHjZNXCN";
 const db = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-let uploadedImageBase64 = "";
+let uploadedImagesBase64 = [];
 
-function previewImage(event) {
-  const file = event.target.files[0];
-  if (!file) return;
-  const reader = new FileReader();
-  reader.onload = function(e) {
-    uploadedImageBase64 = e.target.result;
-    document.getElementById("pPreview").innerHTML = `<img src="${uploadedImageBase64}" alt="Preview">`;
-  };
-  reader.readAsDataURL(file);
+function verifyPassword(e) {
+  e.preventDefault();
+  const pass = document.getElementById("adminPass").value;
+  if(pass === "admin123") {
+    document.getElementById("authModal").classList.remove("show");
+    document.getElementById("mainDashboard").style.display = "block";
+    loadProducts();
+    updateOrdersCount();
+  } else {
+    alert("Incorrect password! Access denied.");
+  }
+}
+
+function calculateDiscount() {
+  const price = Number(document.getElementById("pPrice").value);
+  const old = Number(document.getElementById("pOld").value);
+  if(old > price && price > 0) {
+    const disc = Math.round(((old - price) / old) * 100);
+    document.getElementById("pDiscount").value = disc;
+  }
+}
+
+function handleMultipleImages(event) {
+  const files = Array.from(event.target.files);
+  uploadedImagesBase64 = [];
+  const container = document.getElementById("previewContainer");
+  container.innerHTML = "";
+
+  files.forEach(file => {
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      uploadedImagesBase64.push(e.target.result);
+      const img = document.createElement("img");
+      img.src = e.target.result;
+      img.className = "preview-thumb";
+      container.appendChild(img);
+    };
+    reader.readAsDataURL(file);
+  });
 }
 
 async function saveProduct(e) {
   e.preventDefault();
   const saveBtn = document.getElementById("saveBtn");
   saveBtn.disabled = true;
-  saveBtn.textContent = "Publishing to Cloud...";
+  saveBtn.textContent = "Publishing...";
 
-  const defaultImg = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23f1f4f8'/><text x='50' y='55' font-size='12' fill='%236b7688' text-anchor='middle' font-family='sans-serif'>Product</text></svg>";
+  const defaultImg = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23f1f4f8'/><text x='50' y='55' font-size='12' fill='%236b7688' text-anchor='middle'>Auto Care</text></svg>";
 
   const newProduct = {
     id: Date.now(),
@@ -130,25 +183,27 @@ async function saveProduct(e) {
     cat: document.getElementById("pCat").value,
     price: Number(document.getElementById("pPrice").value),
     old: Number(document.getElementById("pOld").value) || 0,
+    discount: Number(document.getElementById("pDiscount").value) || 0,
     stock: Number(document.getElementById("pStock").value) || 10,
     badge: document.getElementById("pBadge").value.trim() || "NEW",
+    desc: document.getElementById("pDesc").value.trim(),
     rating: 5,
-    img: uploadedImageBase64 || defaultImg
+    images: uploadedImagesBase64.length ? uploadedImagesBase64 : [defaultImg]
   };
 
   const { error } = await db.from('products').insert([newProduct]);
   saveBtn.disabled = false;
-  saveBtn.textContent = "Publish Product Globally →";
+  saveBtn.textContent = "Publish to Live Storefront →";
 
   if (error) {
-    alert("Upload failed: " + error.message);
+    alert("Error uploading product: " + error.message);
     return;
   }
 
-  alert("Product published successfully to cloud!");
+  alert("Product published successfully!");
   e.target.reset();
-  uploadedImageBase64 = "";
-  document.getElementById("pPreview").innerHTML = "<span>No Image</span>";
+  uploadedImagesBase64 = [];
+  document.getElementById("previewContainer").innerHTML = "";
   loadProducts();
 }
 
@@ -157,33 +212,58 @@ async function loadProducts() {
   const { data: products, error } = await db.from('products').select('*').order('id', { ascending: false });
 
   if (error || !products || !products.length) {
-    container.innerHTML = "<p style='grid-column:1/-1;color:var(--muted)'>No products found in cloud database.</p>";
+    container.innerHTML = "<p style='grid-column:1/-1;color:var(--muted)'>No products found in database.</p>";
     return;
   }
 
-  container.innerHTML = products.map((p) => `
+  container.innerHTML = products.map((p) => {
+    const mainImg = (p.images && p.images.length) ? p.images[0] : (p.img || "");
+    return `
     <div class="prod-card">
-      <img src="${p.img}" alt="${p.name}">
-      <b style="display:block;font-size:14px;color:var(--navy);margin-bottom:4px">${p.name}</b>
-      <div style="font-size:13px;color:var(--muted)">₹${Number(p.price).toLocaleString("en-IN")} • Stock: ${p.stock}</div>
-      <button class="btn-danger" style="margin-top:8px;width:100%;font-size:12px" onclick="deleteProduct(${p.id})">Remove</button>
-    </div>
-  `).join("");
+      <img src="${mainImg}" alt="${p.name}">
+      <b style="font-size:15px;color:var(--navy);margin-bottom:4px">${p.name}</b>
+      <div style="font-size:13px;color:var(--muted)">Category: <b>${p.cat}</b></div>
+      <div style="font-size:14px;color:var(--navy);font-weight:700;margin:6px 0">₹${Number(p.price).toLocaleString("en-IN")} ${p.old?`<span style="text-decoration:line-through;color:#94a3b8;font-size:12px">₹${p.old}</span>`:''}</div>
+      
+      <div style="font-size:12px;font-weight:700;color:var(--navy);margin-top:auto">Edit Stock:</div>
+      <div class="stock-control">
+        <button onclick="updateStock(${p.id}, ${p.stock - 1})">-</button>
+        <input type="number" value="${p.stock}" onchange="updateStock(${p.id}, this.value)">
+        <button onclick="updateStock(${p.id}, ${p.stock + 1})">+</button>
+      </div>
+
+      <button class="btn-danger" style="margin-top:10px" onclick="deleteProduct(${p.id})">Delete Product</button>
+    </div>`;
+  }).join("");
+}
+
+async function updateStock(id, newStock) {
+  const stockVal = Math.max(0, Number(newStock));
+  const { error } = await db.from('products').update({ stock: stockVal }).eq('id', id);
+  if (!error) loadProducts();
 }
 
 async function deleteProduct(id) {
-  if (confirm("Delete this product globally from database?")) {
+  if (confirm("Permanently remove this product from the live store?")) {
     const { error } = await db.from('products').delete().eq('id', id);
     if (!error) loadProducts();
   }
 }
 
-async function loadOrders() {
+async function updateOrdersCount() {
+  const { data: orders } = await db.from('orders').select('id');
+  if (orders) document.getElementById("ordersCount").textContent = orders.length;
+}
+
+async function openOrdersModal() {
+  document.getElementById("ordersModal").classList.add("show");
   const container = document.getElementById("ordersContainer");
+  container.innerHTML = "<p>Loading orders...</p>";
+
   const { data: orders, error } = await db.from('orders').select('*').order('date', { ascending: false });
 
   if (error || !orders || !orders.length) {
-    container.innerHTML = "<p style='color:var(--muted)'>No customer orders found in cloud database.</p>";
+    container.innerHTML = "<p style='color:var(--muted)'>No customer orders received yet.</p>";
     return;
   }
 
@@ -195,14 +275,14 @@ async function loadOrders() {
           <span style="color:var(--muted);font-size:13px;margin-left:10px">${new Date(o.date).toLocaleString()}</span>
         </div>
         <div>
-          <span class="tag">${o.payment}</span>
+          <span style="background:#e0f2fe;color:#0369a1;padding:4px 10px;border-radius:20px;font-size:12px;font-weight:700">${o.payment}</span>
           <b style="font-size:18px;color:var(--navy);margin-left:12px">₹${Number(o.total).toLocaleString("en-IN")}</b>
         </div>
       </div>
 
       <div class="customer-info">
         <div>
-          <b style="color:var(--navy)">👤 Customer Details:</b><br>
+          <b style="color:var(--navy)">👤 Customer Information:</b><br>
           <b>Name:</b> ${o.name}<br>
           <b>Mobile:</b> ${o.phone}
         </div>
@@ -213,10 +293,10 @@ async function loadOrders() {
       </div>
 
       <div class="items-list">
-        <b style="color:var(--navy);display:block;margin-bottom:8px">🛍️ Ordered Items:</b>
+        <b style="color:var(--navy);display:block;margin-bottom:8px">🛍️ Ordered Materials:</b>
         ${(o.items || []).map(i => `
           <div class="item-row">
-            <span><b>${i.name}</b> (x${i.qty})</span>
+            <span><b>${i.name}</b> (Qty: ${i.qty})</span>
             <span>₹${(i.price * i.qty).toLocaleString("en-IN")}</span>
           </div>
         `).join("")}
@@ -230,15 +310,18 @@ async function loadOrders() {
 }
 
 async function deleteOrder(id) {
-  if (confirm("Delete this order record permanently?")) {
+  if (confirm("Delete this order record?")) {
     const { error } = await db.from('orders').delete().eq('id', id);
-    if (!error) loadOrders();
+    if (!error) {
+      openOrdersModal();
+      updateOrdersCount();
+    }
   }
 }
 
-loadProducts();
-loadOrders();
+function closeModal(id) {
+  document.getElementById(id).classList.remove("show");
+}
 </script>
-
 </body>
 </html>
