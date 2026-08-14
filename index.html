@@ -3,9 +3,17 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="Devarapus — Premium Car & Motorbike Care, Cleaning Kits and Maintenance Essentials.">
-<title>Devarapus Auto Care | Premium Vehicle Maintenance</title>
-<link rel="icon" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%230d2342'/><path d='M20 60 L35 35 L65 35 L80 60 Z' fill='%23f58220'/><circle cx='35' cy='65' r='10' fill='%23ffffff'/><circle cx='65' cy='65' r='10' fill='%23ffffff'/></svg>">
+<meta name="description" content="Devarapus Auto Care — Premium Car & Motorbike Detailing Kits, Ceramic Shampoos, Chain Lubes & Maintenance Essentials.">
+<title>Devarapus Auto Care | Premium Car & Motorbike Care</title>
+<link rel="icon" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%230a192f'/><path d='M20 60 L35 35 L65 35 L80 60 Z' fill='%23f58220'/><circle cx='35' cy='65' r='10' fill='%23ffffff'/><circle cx='65' cy='65' r='10' fill='%23ffffff'/></svg>">
+
+<!-- Open Graph / WhatsApp Preview Meta Tags -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Devarapus Auto Care | Premium Car & Motorbike Care">
+<meta property="og:description" content="Shop professional snow foam washes, chain lube combos, ceramic coatings & maintenance kits. Easy UPI & Cash on Delivery.">
+<meta property="og:url" content="https://devarapus.store">
+
+<!-- Supabase JS Client -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 :root{--navy:#0a192f;--navy-light:#172a45;--orange:#f58220;--orange-hover:#d96f14;--ink:#1e293b;--muted:#64748b;--line:#e2e8f0;--soft:#f8fafc;--cream:#fff8f0;--blue:#edf4ff;--white:#ffffff;--shadow:0 20px 40px -15px rgba(10,25,47,0.08)}
@@ -25,7 +33,7 @@ footer{background:var(--navy);color:#fff;padding:60px 20px 30px}.foot{max-width:
 </style>
 </head>
 <body>
-<div class="top">🏎️ Free Shipping on Pro Car & Motorbike Detailing Kits over ₹999 • Devarapus Auto</div>
+<div class="top">🏎️ Free Shipping on Pro Car &amp; Motorbike Detailing Kits over ₹999 • Devarapus Auto</div>
 <header class="header"><nav class="nav">
 <img class="logo" id="headerLogo" alt="Devarapus Auto Care">
 <div class="search"><input id="q" placeholder="Search Cleaning Kits, Ceramic Coatings, Chain Lubes..." oninput="render()"><button onclick="render()">⌕</button></div>
@@ -34,11 +42,11 @@ footer{background:var(--navy);color:#fff;padding:60px 20px 30px}.foot{max-width:
 <button class="pill dark" onclick="openCart()">🛒 Cart (<span id="count">0</span>)</button>
 </nav></header>
 
-<section class="hero" id="home"><div class="hero-in"><div><div class="eyebrow">PROFESSIONAL AUTOMOTIVE CARE</div><h1>Maintain showroom shine.<br><span>Ride with pride.</span></h1><p>Premium detailing shampoos, ceramic foam washes, high-grade chain lubes & engine care products designed for automotive enthusiasts.</p><button class="pill" style="background:var(--orange);color:#fff;padding:14px 28px;font-size:16px" onclick="document.getElementById('shop').scrollIntoView()">Explore Auto Care Kits →</button></div><div class="hero-card"><img id="heroLogo" alt="Devarapus Auto Care"><strong>CAR &amp; MOTORBIKE CARE • CLEANING &amp; MAINTENANCE</strong></div></div></section>
+<section class="hero" id="home"><div class="hero-in"><div><div class="eyebrow">PROFESSIONAL AUTOMOTIVE CARE</div><h1>Maintain showroom shine.<br><span>Ride with pride.</span></h1><p>Premium detailing shampoos, ceramic foam washes, high-grade chain lubes &amp; engine care products designed for automotive enthusiasts.</p><button class="pill" style="background:var(--orange);color:#fff;padding:14px 28px;font-size:16px" onclick="document.getElementById('shop').scrollIntoView()">Explore Auto Care Kits →</button></div><div class="hero-card"><img id="heroLogo" alt="Devarapus Auto Care"><strong>CAR &amp; MOTORBIKE CARE • CLEANING &amp; MAINTENANCE</strong></div></div></section>
 
 <section class="wrap" id="categories"><div class="section-head"><h2>Shop by Category</h2><p>Everything you need for complete exterior and mechanical care.</p></div><div class="cats">
-<div class="cat cleaning"><h3>✨ Cleaning &amp; Detailing Kits</h3><p>Foam shampoos, microfiber plush towels, ceramic spray wax & interior polish.</p><button onclick="category='cleaning';render();document.getElementById('shop').scrollIntoView()">Explore Cleaning Kits</button></div>
-<div class="cat maint"><h3>🔧 Maintenance &amp; Engine Care</h3><p>Chain cleaners, lube sprays, brake fluids, coolant & engine flush solutions.</p><button onclick="category='maintenance';render();document.getElementById('shop').scrollIntoView()">Explore Maintenance</button></div>
+<div class="cat cleaning"><h3>✨ Cleaning &amp; Detailing Kits</h3><p>Foam shampoos, microfiber plush towels, ceramic spray wax &amp; interior polish.</p><button onclick="category='cleaning';render();document.getElementById('shop').scrollIntoView()">Explore Cleaning Kits</button></div>
+<div class="cat maint"><h3>🔧 Maintenance &amp; Engine Care</h3><p>Chain cleaners, lube sprays, brake fluids, coolant &amp; engine flush solutions.</p><button onclick="category='maintenance';render();document.getElementById('shop').scrollIntoView()">Explore Maintenance</button></div>
 </div></section>
 
 <section class="wrap" id="shop"><div class="section-head"><h2>Featured Auto Care Products</h2><p>Handpicked formulas for high performance maintenance.</p></div>
@@ -47,7 +55,7 @@ footer{background:var(--navy);color:#fff;padding:60px 20px 30px}.foot{max-width:
 
 <section class="wrap"><div class="benefits"><div class="benefit"><b>🛡️ Pro Detailing Grade</b><span>Safe on paint, chrome, carbon and matte finishes.</span></div><div class="benefit"><b>🚚 Fast Secure Dispatch</b><span>Dispatched directly within 24 hours.</span></div><div class="benefit"><b>💬 Technical Support</b><span>Usage guides and bike/car care tips.</span></div><div class="benefit"><b>↩️ 100% Genuine Formula</b><span>Guaranteed authentic products.</span></div></div></section>
 
-<footer><div class="foot"><div><h3>Devarapus Auto Care</h3><p>Engineered for high performance car and motorbike detailing and maintenance.</p></div><div><h3>Catalog</h3><p>Foam Wash Kits<br>Chain Clean & Lube<br>Ceramic Coatings<br>Scratch Removers</p></div><div><h3>Quick Links</h3><p>Shipping Policy<br>Returns Info<br><a href="admin.html" target="_blank" style="color:#f58220;text-decoration:none">Admin Login</a></p></div></div><div class="bottom">© 2026 Devarapus Auto Care. All rights reserved.</div></footer>
+<footer><div class="foot"><div><h3>Devarapus Auto Care</h3><p>Engineered for high performance car and motorbike detailing and maintenance.</p></div><div><h3>Catalog</h3><p>Foam Wash Kits<br>Chain Clean &amp; Lube<br>Ceramic Coatings<br>Scratch Removers</p></div><div><h3>Quick Links</h3><p>Shipping Policy<br>Returns Info<br><a href="admin.html" target="_blank" style="color:#f58220;text-decoration:none">Admin Login</a></p></div></div><div class="bottom">© 2026 Devarapus Auto Care. All rights reserved.</div></footer>
 
 <div class="modal" id="cartModal"><div class="box"><button class="close" onclick="closeM('cartModal')">×</button><h2>Your Cart</h2><div id="cartItems"></div><div class="summary">Total Amount: <b style="font-size:20px;color:var(--navy)">₹<span id="cartTotal">0</span></b><br><button class="pill" style="margin-top:16px;background:var(--orange);color:#fff;width:100%;justify-content:center" onclick="checkout()">Proceed to Checkout →</button></div></div></div>
 <div class="modal" id="checkoutModal"><div class="box"><button class="close" onclick="closeM('checkoutModal')">×</button><h2>Checkout &amp; Payment</h2><div id="checkoutBox"></div></div></div>
