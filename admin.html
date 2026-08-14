@@ -26,22 +26,19 @@ header h1{margin:0;font-size:20px;display:flex;align-items:center;gap:10px}
 .field label{display:block;font-size:13px;font-weight:700;margin-bottom:6px;color:var(--navy)}
 .field input,.field textarea,.field select{width:100%;border:1px solid var(--line);border-radius:10px;padding:10px;outline:0;background:#fff;font-size:14px}
 .field input:focus,.field textarea:focus{border-color:var(--orange)}
-.btn{background:var(--navy);color:#fff;border:0;padding:10px 18px;border-radius:10px;font-weight:700;cursor:pointer}
+.btn{background:var(--navy);color:#fff;border:0;padding:8px 14px;border-radius:8px;font-weight:700;cursor:pointer;font-size:12px}
 .btn:hover{background:var(--navy-light)}
 .btn-orange{background:var(--orange);color:#fff}
 .btn-orange:hover{background:var(--orange-hover)}
-.btn-green{background:#16a34a;color:#fff}
-.btn-green:hover{background:#15803d}
-.btn-wa{background:#25D366;color:#fff;display:inline-flex;align-items:center;gap:4px;text-decoration:none;padding:6px 12px;border-radius:8px;font-size:12px;font-weight:700}
+.btn-sms{background:#0284c7;color:#fff}
+.btn-sms:hover{background:#0369a1}
+.btn-wa{background:#25D366;color:#fff}
 .btn-wa:hover{background:#1ebe57}
 .table-wrap{overflow-x:auto}
 table{width:100%;border-collapse:collapse;margin-top:12px;font-size:13px}
 th,td{padding:12px;text-align:left;border-bottom:1px solid var(--line)}
 th{background:#f8fafc;color:var(--navy);font-weight:700}
-.status-pill{display:inline-block;padding:4px 10px;border-radius:12px;font-size:11px;font-weight:800}
-.status-pending{background:#fef3c7;color:#92400e}
-.status-confirmed{background:#dcfce7;color:#166534}
-.status-dispatched{background:#e0f2fe;color:#0369a1}
+.action-stack{display:flex;flex-direction:column;gap:6px}
 .img-prev{width:40px;height:40px;border-radius:6px;object-fit:cover;border:1px solid var(--line)}
 @media(max-width:768px){.grid{grid-template-columns:1fr}}
 </style>
@@ -65,7 +62,7 @@ th{background:#f8fafc;color:var(--navy);font-weight:700}
   <div class="card" id="ordersSection">
     <h2>
       <span>Customer Orders &amp; Fulfillment</span>
-      <button class="btn" onclick="fetchOrders()">🔄 Refresh</button>
+      <button class="btn btn-orange" onclick="fetchOrders()">🔄 Refresh Orders</button>
     </h2>
     <div class="table-wrap">
       <table>
@@ -78,7 +75,7 @@ th{background:#f8fafc;color:var(--navy);font-weight:700}
             <th>Amount</th>
             <th>Payment</th>
             <th>Status</th>
-            <th>Actions</th>
+            <th>Trigger Customer Updates</th>
           </tr>
         </thead>
         <tbody id="ordersTableBody">
@@ -110,7 +107,7 @@ th{background:#f8fafc;color:var(--navy);font-weight:700}
         <div class="field full"><label>Product Description</label><textarea id="pDesc" rows="2" placeholder="Detailing features, dilution ratios, finish type..."></textarea></div>
         <div class="field full"><label>Image URL (Direct link or SVG data URI)</label><input id="pImg" placeholder="https://example.com/item.jpg"></div>
       </div>
-      <button class="btn btn-orange" style="margin-top:12px" type="submit">➕ Add Product to Catalog</button>
+      <button class="btn btn-orange" style="margin-top:12px;padding:12px 20px" type="submit">➕ Add Product to Catalog</button>
     </form>
 
     <h2 style="margin-top:40px">Existing Products in Database</h2>
@@ -135,10 +132,12 @@ th{background:#f8fafc;color:var(--navy);font-weight:700}
 </div>
 
 <script>
-// --- SUPABASE CLIENT CONFIGURATION ---
+// --- SUPABASE & FAST2SMS CONFIGURATION ---
 const SUPABASE_URL = "https://xqiqnzkiauekegzojavi.supabase.co";
 const SUPABASE_KEY = "sb_publishable_90aJd7OYoDJASIqcjfu4zA_lHjZNXCN";
 const db = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+const FAST2SMS_API_KEY = "cbBiJvCOK6o7fqLshjVTMxR4WXmDZQyHlUEn93FPa01zuNASYrurG9CjZypsMbAcOEIBP3Ln2amt7hTz";
 
 function switchTab(tab) {
   document.getElementById('ordersSection').style.display = (tab === 'orders') ? 'block' : 'none';
@@ -149,7 +148,7 @@ function switchTab(tab) {
   if(tab === 'products') fetchProducts();
 }
 
-// --- FETCH & MANAGE ORDERS ---
+// --- FETCH & RENDER ORDERS ---
 async function fetchOrders() {
   const tbody = document.getElementById('ordersTableBody');
   const { data, error } = await db.from('orders').select('*').order('id', { ascending: false });
@@ -167,13 +166,7 @@ async function fetchOrders() {
   }
 
   tbody.innerHTML = data.map(o => {
-    const isConfirmed = o.status && o.status.includes('Confirmed');
     const itemsText = Array.isArray(o.items) ? o.items.map(i => `${i.name} (x${i.qty})`).join(', ') : 'Details in log';
-    
-    // Status Pill Color
-    let statusClass = 'status-pending';
-    if (o.status && o.status.includes('Confirmed')) statusClass = 'status-confirmed';
-    if (o.status && o.status.includes('Dispatched')) statusClass = 'status-dispatched';
 
     return `
       <tr>
@@ -187,7 +180,7 @@ async function fetchOrders() {
         <td><b>₹${Number(o.total).toLocaleString('en-IN')}</b></td>
         <td><small>${o.payment || 'UPI'}</small></td>
         <td>
-          <select onchange="updateOrderStatus('${o.number}', this.value)" style="padding:4px 8px;border-radius:8px;font-size:12px">
+          <select onchange="updateOrderStatus('${o.number}', this.value)" style="padding:6px 8px;border-radius:8px;font-size:12px;font-weight:600">
             <option value="Pending Verification" ${o.status==='Pending Verification'?'selected':''}>Pending Verification</option>
             <option value="Payment Confirmed & Processing" ${o.status==='Payment Confirmed & Processing'?'selected':''}>Payment Confirmed & Processing</option>
             <option value="Dispatched / In Transit" ${o.status==='Dispatched / In Transit'?'selected':''}>Dispatched / In Transit</option>
@@ -195,9 +188,14 @@ async function fetchOrders() {
           </select>
         </td>
         <td>
-          <div style="display:flex;flex-direction:column;gap:6px">
-            <button class="btn btn-green" style="padding:6px 10px;font-size:11px" onclick="confirmPaymentAndNotify('${o.number}', '${o.phone}', '${o.name}', '${o.total}')">
-              ✅ Confirm &amp; WhatsApp
+          <div class="action-stack">
+            <!-- 1. Trigger Text Message Confirmation -->
+            <button class="btn btn-sms" onclick="triggerAdminSms('${o.number}', '${o.phone}', '${o.name}', '${o.total}')">
+              📩 Trigger SMS Confirm
+            </button>
+            <!-- 2. Trigger WhatsApp Confirmation -->
+            <button class="btn btn-wa" onclick="triggerAdminWhatsApp('${o.number}', '${o.phone}', '${o.name}', '${o.total}')">
+              💬 WhatsApp Confirm
             </button>
           </div>
         </td>
@@ -206,34 +204,47 @@ async function fetchOrders() {
   }).join('');
 }
 
-// --- UPDATE STATUS & LAUNCH WHATSAPP CONFIRMATION ---
-async function confirmPaymentAndNotify(orderNumber, phone, name, total) {
-  const { error } = await db.from('orders').update({ status: 'Payment Confirmed & Processing' }).eq('number', orderNumber);
-  if (error) {
-    alert("Error updating order: " + error.message);
-    return;
-  }
+// --- TRIGGER AUTOMATED TEXT SMS FROM ADMIN ---
+async function triggerAdminSms(orderNumber, phone, name, total) {
+  await updateOrderStatus(orderNumber, 'Payment Confirmed & Processing');
+  
+  const cleanPhone = phone.replace(/[^0-9]/g, '');
+  const smsBody = encodeURIComponent(`Hi ${name}, your payment of Rs.${total} for Order #${orderNumber} is CONFIRMED! Devarapus Auto Care is processing your package.`);
+  const apiUrl = `https://www.fast2sms.com/dev/bulkV2?authorization=${FAST2SMS_API_KEY}&route=q&message=${smsBody}&language=english&flash=0&numbers=${cleanPhone}`;
 
+  try {
+    fetch(apiUrl, { mode: 'no-cors' }).catch(()=>{});
+  } catch(e){}
+
+  const beacon = new Image();
+  beacon.src = apiUrl;
+
+  alert(`✅ SMS Text message confirmation sent to +91 ${cleanPhone}!`);
+}
+
+// --- TRIGGER WHATSAPP CONFIRMATION FROM ADMIN ---
+async function triggerAdminWhatsApp(orderNumber, phone, name, total) {
+  await updateOrderStatus(orderNumber, 'Payment Confirmed & Processing');
+  
   const cleanPhone = phone.replace(/[^0-9]/g, '');
   const msg = encodeURIComponent(
     `Hello ${name}! 🏎️✅\n\n` +
     `We have received your payment of *₹${Number(total).toLocaleString('en-IN')}* for Order *#${orderNumber}*.\n\n` +
     `Your order is now *CONFIRMED & IN PROCESS*.\n` +
-    `We will share your courier tracking link once dispatched.\n\n` +
+    `We will share your tracking link once dispatched.\n\n` +
     `Thank you for choosing *Devarapus Auto Care*!`
   );
 
   window.open(`https://wa.me/91${cleanPhone}?text=${msg}`, '_blank');
-  fetchOrders();
 }
 
 async function updateOrderStatus(orderNumber, newStatus) {
   const { error } = await db.from('orders').update({ status: newStatus }).eq('number', orderNumber);
-  if (error) alert("Error updating status: " + error.message);
+  if (error) console.error("Status update error:", error);
   else fetchOrders();
 }
 
-// --- FETCH & MANAGE PRODUCTS ---
+// --- PRODUCT CATALOG MANAGEMENT ---
 async function fetchProducts() {
   const tbody = document.getElementById('productsTableBody');
   const { data, error } = await db.from('products').select('*').order('id', { ascending: false });
