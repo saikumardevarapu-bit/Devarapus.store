@@ -29,6 +29,8 @@
 footer{background:var(--navy);color:#fff;padding:60px 20px 30px}.foot{max-width:1280px;margin:auto;display:grid;grid-template-columns:2fr 1fr 1fr;gap:40px}.foot h3{margin-top:0;font-size:20px}.foot p{color:#94a3b8;line-height:1.7}.bottom{text-align:center;border-top:1px solid rgba(255,255,255,0.1);margin-top:40px;padding-top:24px;color:#64748b;font-size:14px}
 .modal{display:none;position:fixed;inset:0;background:rgba(10,25,47,0.65);backdrop-filter:blur(4px);z-index:100;align-items:center;justify-content:center;padding:20px}.modal.show{display:flex}.box{background:#fff;border-radius:28px;max-width:760px;width:100%;max-height:90vh;overflow:auto;padding:32px;box-shadow:0 25px 50px -12px rgba(0,0,0,0.25)}.close{float:right;border:0;background:#f1f5f9;border-radius:50%;width:38px;height:38px;font-size:20px;color:var(--navy)}.close:hover{background:#e2e8f0}.box h2{margin-top:0;color:var(--navy);font-size:24px}.cartrow{display:grid;grid-template-columns:1fr auto auto;gap:16px;align-items:center;border-bottom:1px solid var(--line);padding:16px 0}.qty button{border:1px solid var(--line);background:#fff;border-radius:8px;width:32px;height:32px;font-weight:700}.summary{background:var(--soft);padding:20px;border-radius:18px;margin-top:20px;border:1px solid var(--line)}.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}.field{margin:8px 0}.field.full{grid-column:1/-1}.field label{display:block;font-size:13px;font-weight:700;margin-bottom:6px;color:var(--navy)}.field input,.field textarea,.field select{width:100%;border:1px solid var(--line);border-radius:12px;padding:12px;outline:0;background:#fff}.field input:focus,.field textarea:focus{border-color:var(--orange)}
 .upi-box{background:#fff;padding:20px;border-radius:16px;border:2px dashed var(--orange);margin:16px 0}
+.phonepe-main-btn{display:flex;align-items:center;justify-content:center;gap:10px;background:#5f259f;color:#fff;padding:14px;border-radius:14px;font-weight:800;font-size:15px;text-decoration:none;box-shadow:0 4px 12px rgba(95,37,159,0.25);margin-bottom:12px;transition:transform .15s}
+.phonepe-main-btn:active{transform:scale(0.98)}
 .upi-apps-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0}
 .upi-app-btn{display:flex;align-items:center;justify-content:center;gap:6px;padding:12px;border-radius:12px;font-weight:700;font-size:13px;text-decoration:none;box-shadow:0 2px 6px rgba(0,0,0,0.08);transition:transform .15s}
 .upi-app-btn:active{transform:scale(0.97)}
@@ -73,7 +75,7 @@ const SUPABASE_URL = "https://xqiqnzkiauekegzojavi.supabase.co";
 const SUPABASE_KEY = "sb_publishable_90aJd7OYoDJASIqcjfu4zA_lHjZNXCN";
 const db = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-// --- CONFIGURED WITH YOUR OFFICIAL UPI ID ---
+// --- YOUR OFFICIAL UPI ID ---
 const STORE_UPI_ID = "dvenkatasaikumar@ybl";
 
 function createAutoLogoUri() {
@@ -243,9 +245,17 @@ function drawCart(){
 function qty(id,n){ let x=cart.find(a=>a.id===id), p=products.find(a=>a.id===id); if(!x)return; if(n>0&&x.qty>=p.stock)return; x.qty+=n; if(x.qty<=0) cart=cart.filter(a=>a.id!==id); saveCart(); drawCart(); }
 function removeItem(id){ cart=cart.filter(x=>x.id!==id); saveCart(); drawCart(); }
 
+function copyAndOpenPhonePe() {
+  navigator.clipboard.writeText(STORE_UPI_ID);
+  toast("UPI ID copied: " + STORE_UPI_ID);
+  setTimeout(() => {
+    window.location.href = "phonepe://pay";
+  }, 500);
+}
+
 function copyUpiId() {
   navigator.clipboard.writeText(STORE_UPI_ID);
-  toast("UPI ID copied to clipboard: " + STORE_UPI_ID);
+  toast("UPI ID copied: " + STORE_UPI_ID);
 }
 
 function checkout(){
@@ -254,7 +264,6 @@ function checkout(){
  const currentTempOrderId = "DV-AUTO-" + Date.now().toString().slice(-5);
  let total = cart.reduce((a,x)=>a+(products.find(p=>p.id===x.id)?.price||0)*x.qty,0);
  
- // Standardized universal UPI protocol query
  const upiQuery = `pa=${encodeURIComponent(STORE_UPI_ID)}&pn=${encodeURIComponent("Devarapus Auto Care")}&am=${total.toFixed(2)}&cu=INR&tn=${encodeURIComponent("Order "+currentTempOrderId)}`;
  const qrApiUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent("upi://pay?" + upiQuery)}`;
  
@@ -269,33 +278,37 @@ function checkout(){
        <div class="field full">
          <label>Select Payment Method</label>
          <select id="payment" onchange="togglePaymentArea(this.value)">
-           <option value="UPI">Direct UPI (PhonePe / GPay / Paytm / QR)</option>
+           <option value="UPI">PhonePe / UPI Direct Payment</option>
            <option value="Cash on Delivery">Cash on Delivery</option>
          </select>
        </div>
      </div>
 
      <div id="upiArea" class="upi-box">
-       <div style="font-weight:700;color:var(--navy);font-size:14px;margin-bottom:4px">⚡ 1-Tap to Pay with Installed UPI App:</div>
+       <div style="font-weight:700;color:var(--navy);font-size:14px;margin-bottom:8px">⚡ 1-Tap Direct UPI Options:</div>
+       
+       <!-- Dedicated PhonePe Intent Button -->
+       <a href="phonepe://pay?${upiQuery}" class="phonepe-main-btn">
+         🟣 Pay ₹${total.toLocaleString("en-IN")} via PhonePe Directly
+       </a>
+
        <div class="upi-apps-grid">
-         <a href="upi://pay?${upiQuery}" class="upi-app-btn" style="background:#5f259f;color:#fff;">🟣 Open PhonePe / UPI</a>
-         <a href="upi://pay?${upiQuery}" class="upi-app-btn" style="background:#0f9d58;color:#fff;">🟢 Open GPay / UPI</a>
-         <a href="upi://pay?${upiQuery}" class="upi-app-btn" style="background:#00baf2;color:#fff;">🔵 Open Paytm / UPI</a>
-         <a href="upi://pay?${upiQuery}" class="upi-app-btn" style="background:#0a192f;color:#fff;">⚡ Any UPI App</a>
+         <a href="upi://pay?${upiQuery}" class="upi-app-btn" style="background:#5f259f;color:#fff;">🟣 Open PhonePe / App</a>
+         <a href="javascript:void(0)" onclick="copyAndOpenPhonePe()" class="upi-app-btn" style="background:#0a192f;color:#fff;">📋 Copy UPI &amp; Open PhonePe</a>
        </div>
 
        <div style="text-align:center;margin:16px 0;background:#f8fafc;padding:12px;border-radius:12px">
-         <div style="font-size:12px;font-weight:700;color:var(--navy);margin-bottom:4px">SCAN QR WITH ANY APP (PHONEPE, GPAY, PAYTM)</div>
+         <div style="font-size:12px;font-weight:700;color:var(--navy);margin-bottom:4px">OR SCAN QR WITH PHONEPE / GPAY</div>
          <img src="${qrApiUrl}" alt="Live UPI QR Code" style="width:140px;height:140px;margin:8px 0;border-radius:10px;border:1px solid #e2e8f0">
          <div style="font-size:13px;color:var(--navy);margin-top:4px">
            UPI ID: <b>${STORE_UPI_ID}</b>
-           <button type="button" class="copy-btn" onclick="copyUpiId()">📋 Copy UPI</button>
+           <button type="button" class="copy-btn" onclick="copyUpiId()">📋 Copy</button>
          </div>
        </div>
 
        <div class="field full">
          <label>UPI UTR / Transaction ID (Enter after payment to confirm)</label>
-         <input id="utr" placeholder="12-digit UTR from payment receipt" maxlength="16">
+         <input id="utr" placeholder="12-digit UTR from PhonePe payment receipt" maxlength="16">
        </div>
      </div>
 
