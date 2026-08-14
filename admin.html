@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Devarapus | Admin Portal</title>
 <link rel="icon" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%230d2342'/><text x='50' y='70' font-size='60' font-weight='bold' text-anchor='middle' fill='%23f58220' font-family='Georgia, serif'>D</text></svg>">
+<!-- Supabase JS Client -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 :root{--navy:#0d2342;--orange:#f58220;--ink:#172337;--muted:#6b7688;--line:#e2e8f0;--soft:#f8fafc;--white:#ffffff}
 *{box-sizing:border-box}body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;color:var(--ink);background:#f1f5f9}
@@ -40,17 +42,17 @@ header h1{margin:0;font-size:20px;display:flex;align-items:center;gap:10px}
 <body>
 
 <header>
-  <h1>📦 Devarapus Admin & Store Manager</h1>
+  <h1>📦 Devarapus Cloud Admin Portal</h1>
   <a href="index.html" target="_blank" style="color:#fff;text-decoration:none;font-weight:600">🌐 View Live Storefront</a>
 </header>
 
 <div class="wrap">
-  <!-- Add New Product Section -->
+  <!-- Upload Section -->
   <div class="card">
-    <h2>➕ Upload New Product Details & Photo</h2>
+    <h2>➕ Upload New Product (Cloud Database)</h2>
     <form onsubmit="saveProduct(event)">
       <div class="grid">
-        <div class="field"><label>Product Title *</label><input id="pName" placeholder="e.g. Smart Digital Air Fryer" required></div>
+        <div class="field"><label>Product Title *</label><input id="pName" placeholder="e.g. Smart Air Fryer" required></div>
         <div class="field">
           <label>Category *</label>
           <select id="pCat" required>
@@ -61,41 +63,46 @@ header h1{margin:0;font-size:20px;display:flex;align-items:center;gap:10px}
         <div class="field"><label>Selling Price (₹) *</label><input id="pPrice" type="number" placeholder="2499" required></div>
         <div class="field"><label>Original Price / MRP (₹)</label><input id="pOld" type="number" placeholder="3999"></div>
         <div class="field"><label>Stock Quantity *</label><input id="pStock" type="number" value="15" required></div>
-        <div class="field"><label>Badge Tag</label><input id="pBadge" placeholder="e.g. NEW, 30% OFF, BESTSELLER"></div>
+        <div class="field"><label>Badge Tag</label><input id="pBadge" placeholder="e.g. NEW, 30% OFF"></div>
         
         <div class="field full">
           <label>Upload Product Photo *</label>
           <input type="file" id="pImgFile" accept="image/*" onchange="previewImage(event)">
           <div style="display:flex;align-items:center;gap:16px;margin-top:10px">
             <div class="preview-box" id="pPreview"><span>No Image</span></div>
-            <span style="font-size:12px;color:var(--muted)">Supported formats: JPG, PNG, WEBP, SVG.<br>Images will be optimized directly into storefront database.</span>
+            <span style="font-size:12px;color:var(--muted)">Images are automatically converted and synced to all visitors globally.</span>
           </div>
         </div>
       </div>
-      <button type="submit" class="btn-primary" style="margin-top:16px">Publish Product to Store →</button>
+      <button type="submit" class="btn-primary" style="margin-top:16px" id="saveBtn">Publish Product Globally →</button>
     </form>
   </div>
 
-  <!-- Manage Store Products Section -->
+  <!-- Live Products -->
   <div class="card">
     <h2>
-      <span>🛒 Store Products Catalogue</span>
+      <span>🛒 Live Products Catalogue</span>
       <button class="btn-refresh" onclick="loadProducts()">Refresh Products</button>
     </h2>
-    <div id="productsContainer" class="product-grid"></div>
+    <div id="productsContainer" class="product-grid">Loading cloud products...</div>
   </div>
 
-  <!-- Customer Orders Breakdown Section -->
+  <!-- Live Orders -->
   <div class="card">
     <h2>
       <span>📋 Customer Orders</span>
       <button class="btn-refresh" onclick="loadOrders()">Refresh Orders</button>
     </h2>
-    <div id="ordersContainer"></div>
+    <div id="ordersContainer">Loading cloud orders...</div>
   </div>
 </div>
 
 <script>
+// --- SUPABASE CLIENT CONFIGURATION ---
+const SUPABASE_URL = "https://xqiqnzkiauekegzojavi.supabase.co";
+const SUPABASE_KEY = "sb_publishable_90aJd7OYoDJASIqcjfu4zA_lHjZNXCN";
+const db = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
 let uploadedImageBase64 = "";
 
 function previewImage(event) {
@@ -109,47 +116,48 @@ function previewImage(event) {
   reader.readAsDataURL(file);
 }
 
-function saveProduct(e) {
+async function saveProduct(e) {
   e.preventDefault();
-  const name = document.getElementById("pName").value.trim();
-  const cat = document.getElementById("pCat").value;
-  const price = Number(document.getElementById("pPrice").value);
-  const old = Number(document.getElementById("pOld").value) || 0;
-  const stock = Number(document.getElementById("pStock").value) || 10;
-  const badge = document.getElementById("pBadge").value.trim() || "NEW";
+  const saveBtn = document.getElementById("saveBtn");
+  saveBtn.disabled = true;
+  saveBtn.textContent = "Publishing to Cloud...";
 
   const defaultImg = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23f1f4f8'/><text x='50' y='55' font-size='12' fill='%236b7688' text-anchor='middle' font-family='sans-serif'>Product</text></svg>";
 
   const newProduct = {
     id: Date.now(),
-    name,
-    cat,
-    price,
-    old,
-    stock,
-    badge,
+    name: document.getElementById("pName").value.trim(),
+    cat: document.getElementById("pCat").value,
+    price: Number(document.getElementById("pPrice").value),
+    old: Number(document.getElementById("pOld").value) || 0,
+    stock: Number(document.getElementById("pStock").value) || 10,
+    badge: document.getElementById("pBadge").value.trim() || "NEW",
     rating: 5,
     img: uploadedImageBase64 || defaultImg
   };
 
-  let products = JSON.parse(localStorage.getItem("dv_products") || "[]");
-  products.unshift(newProduct);
-  localStorage.setItem("dv_products", JSON.stringify(products));
+  const { error } = await db.from('products').insert([newProduct]);
+  saveBtn.disabled = false;
+  saveBtn.textContent = "Publish Product Globally →";
 
-  alert("Product published successfully!");
+  if (error) {
+    alert("Upload failed: " + error.message);
+    return;
+  }
+
+  alert("Product published successfully to cloud!");
   e.target.reset();
   uploadedImageBase64 = "";
   document.getElementById("pPreview").innerHTML = "<span>No Image</span>";
-  
   loadProducts();
 }
 
-function loadProducts() {
+async function loadProducts() {
   const container = document.getElementById("productsContainer");
-  const products = JSON.parse(localStorage.getItem("dv_products") || "[]");
+  const { data: products, error } = await db.from('products').select('*').order('id', { ascending: false });
 
-  if (!products.length) {
-    container.innerHTML = "<p style='grid-column:1/-1;color:var(--muted)'>No products available in database.</p>";
+  if (error || !products || !products.length) {
+    container.innerHTML = "<p style='grid-column:1/-1;color:var(--muted)'>No products found in cloud database.</p>";
     return;
   }
 
@@ -157,31 +165,29 @@ function loadProducts() {
     <div class="prod-card">
       <img src="${p.img}" alt="${p.name}">
       <b style="display:block;font-size:14px;color:var(--navy);margin-bottom:4px">${p.name}</b>
-      <div style="font-size:13px;color:var(--muted)">₹${p.price.toLocaleString("en-IN")} • Stock: ${p.stock}</div>
+      <div style="font-size:13px;color:var(--muted)">₹${Number(p.price).toLocaleString("en-IN")} • Stock: ${p.stock}</div>
       <button class="btn-danger" style="margin-top:8px;width:100%;font-size:12px" onclick="deleteProduct(${p.id})">Remove</button>
     </div>
   `).join("");
 }
 
-function deleteProduct(id) {
-  if (confirm("Delete this product from storefront?")) {
-    let products = JSON.parse(localStorage.getItem("dv_products") || "[]");
-    products = products.filter(p => p.id !== id);
-    localStorage.setItem("dv_products", JSON.stringify(products));
-    loadProducts();
+async function deleteProduct(id) {
+  if (confirm("Delete this product globally from database?")) {
+    const { error } = await db.from('products').delete().eq('id', id);
+    if (!error) loadProducts();
   }
 }
 
-function loadOrders() {
+async function loadOrders() {
   const container = document.getElementById("ordersContainer");
-  const orders = JSON.parse(localStorage.getItem("dv_orders") || "[]");
+  const { data: orders, error } = await db.from('orders').select('*').order('date', { ascending: false });
 
-  if (!orders.length) {
-    container.innerHTML = "<p style='color:var(--muted)'>No customer orders received yet.</p>";
+  if (error || !orders || !orders.length) {
+    container.innerHTML = "<p style='color:var(--muted)'>No customer orders found in cloud database.</p>";
     return;
   }
 
-  container.innerHTML = orders.map((o, index) => `
+  container.innerHTML = orders.map((o) => `
     <div class="order-box">
       <div class="order-header">
         <div>
@@ -190,7 +196,7 @@ function loadOrders() {
         </div>
         <div>
           <span class="tag">${o.payment}</span>
-          <b style="font-size:18px;color:var(--navy);margin-left:12px">₹${o.total.toLocaleString("en-IN")}</b>
+          <b style="font-size:18px;color:var(--navy);margin-left:12px">₹${Number(o.total).toLocaleString("en-IN")}</b>
         </div>
       </div>
 
@@ -208,7 +214,7 @@ function loadOrders() {
 
       <div class="items-list">
         <b style="color:var(--navy);display:block;margin-bottom:8px">🛍️ Ordered Items:</b>
-        ${o.items.map(i => `
+        ${(o.items || []).map(i => `
           <div class="item-row">
             <span><b>${i.name}</b> (x${i.qty})</span>
             <span>₹${(i.price * i.qty).toLocaleString("en-IN")}</span>
@@ -217,18 +223,16 @@ function loadOrders() {
       </div>
 
       <div style="text-align:right;margin-top:12px">
-        <button class="btn-danger" onclick="deleteOrder(${index})">Delete Order Record</button>
+        <button class="btn-danger" onclick="deleteOrder('${o.id}')">Delete Order Record</button>
       </div>
     </div>
   `).join("");
 }
 
-function deleteOrder(index) {
-  if (confirm("Are you sure you want to remove this order record?")) {
-    let orders = JSON.parse(localStorage.getItem("dv_orders") || "[]");
-    orders.splice(index, 1);
-    localStorage.setItem("dv_orders", JSON.stringify(orders));
-    loadOrders();
+async function deleteOrder(id) {
+  if (confirm("Delete this order record permanently?")) {
+    const { error } = await db.from('orders').delete().eq('id', id);
+    if (!error) loadOrders();
   }
 }
 
